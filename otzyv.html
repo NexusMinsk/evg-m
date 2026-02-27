@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Евгений | Отзывы клиентов</title>
+    <!-- Шрифты -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Merriweather:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* СБРОС И БАЗА */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f1115;
+            color: #fff;
+            overflow-x: hidden;
+            line-height: 1.5;
+        }
+
+        /* АНИМАЦИИ ПОЯВЛЕНИЯ */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* ДЛЯ ЭЛЕМЕНТОВ, ПОЯВЛЯЮЩИХСЯ ПРИ СКРОЛЛЕ */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);
+        }
+
+        .reveal-left.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(30px);
+            transition: all 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);
+        }
+
+        .reveal-right.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-scale {
+            opacity: 0;
+            transform: scale(0.95);
+            transition: all 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);
+        }
+
+        .reveal-scale.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* ЛИПКАЯ НАВИГАЦИЯ */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(15, 17, 21, 0.92);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(212, 163, 115, 0.3);
+            padding: 1.2rem 2rem;
+            width: 100%;
+            animation: slideInLeft 0.6s ease-out;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .nav-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .nav-logo span {
+            color: #d4a373;
+            font-family: 'Merriweather', serif;
+            font-style: italic;
+            font-weight: 300;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+            padding: 0.5rem 0;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: #d4a373;
+            border-bottom-color: #d4a373;
+        }
+
+        .nav-cities {
+            display: flex;
+            gap: 1.2rem;
+            background: rgba(212, 163, 115, 0.1);
+            padding: 0.5rem 1.5rem;
+            border-radius: 40px;
+            border: 1px solid rgba(212, 163, 115, 0.3);
+        }
+
+        .nav-cities span {
+            color: #fff;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        /* ПЕРВАЯ СЕКЦИЯ С VANTA */
+        .hero-section {
+            position: relative;
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #vanta-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: 0.9;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            min-height: 60vh;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 2rem 1.5rem;
+            width: 100%;
+        }
+
+        .hero-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 2rem 0 3rem 0;
+            max-width: 900px;
+        }
+
+        .hero-greeting {
+            font-size: 1.2rem;
+            color: #d4a373;
+            margin-bottom: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            animation: slideInLeft 0.8s 0.2s ease-out forwards;
+            opacity: 0;
+        }
+
+        .hero-title {
+            font-size: clamp(2.8rem, 8vw, 5.2rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.8rem;
+            font-family: 'Merriweather', serif;
+            font-weight: 300;
+            color: #fff;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            animation: fadeUp 1s 0.3s ease-out forwards;
+            opacity: 0;
+        }
+
+        .hero-title strong {
+            font-weight: 700;
+            color: #d4a373;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .hero-desc {
+            font-size: 1.2rem;
+            max-width: 600px;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 2.5rem;
+            border-left: 3px solid #d4a373;
+            padding-left: 1.8rem;
+            animation: slideInRight 0.8s 0.4s ease-out forwards;
+            opacity: 0;
+        }
+
+        /* ВТОРАЯ СЕКЦИЯ */
+        .content-section {
+            background-color: #0f1115;
+            position: relative;
+            z-index: 5;
+            padding: 5rem 2rem;
+        }
+
+        .content-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            font-family: 'Merriweather', serif;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .section-title span {
+            color: #d4a373;
+            font-weight: 400;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 4rem;
+            max-width: 700px;
+        }
+
+        /* СТАТИСТИКА ОТЗЫВОВ */
+        .review-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-bottom: 5rem;
+        }
+
+        .review-stat-card {
+            background: rgba(26, 29, 36, 0.5);
+            border: 1px solid rgba(212, 163, 115, 0.2);
+            border-radius: 30px;
+            padding: 2rem;
+            text-align: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .review-stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #d4a373;
+            font-family: 'Merriweather', serif;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .review-stat-label {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* ФИЛЬТРЫ */
+        .reviews-filter {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            background: transparent;
+            border: 1px solid rgba(212, 163, 115, 0.3);
+            color: rgba(255,255,255,0.7);
+            padding: 0.8rem 2rem;
+            border-radius: 40px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: #d4a373;
+            border-color: #d4a373;
+            color: #0f1115;
+        }
+
+        /* СЕТКА ОТЗЫВОВ */
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .review-card {
+            background: linear-gradient(145deg, #1a1d24, #0f1115);
+            border: 1px solid rgba(212, 163, 115, 0.2);
+            border-radius: 30px;
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+
+        .review-card:hover {
+            border-color: #d4a373;
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px -10px rgba(212, 163, 115, 0.2);
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .review-avatar {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #d4a373, #b88a5e);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #0f1115;
+        }
+
+        .review-author h4 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .review-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: rgba(255,255,255,0.5);
+            font-size: 0.9rem;
+        }
+
+        .review-rating {
+            color: #d4a373;
+            letter-spacing: 2px;
+        }
+
+        .review-service {
+            background: rgba(212, 163, 115, 0.1);
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #d4a373;
+        }
+
+        .review-content {
+            color: rgba(255,255,255,0.8);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+
+        .review-content i {
+            color: #d4a373;
+            opacity: 0.5;
+            margin-right: 0.3rem;
+        }
+
+        .review-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 1.2rem;
+            color: rgba(255,255,255,0.4);
+            font-size: 0.9rem;
+        }
+
+        .review-project {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .review-project i {
+            color: #d4a373;
+        }
+
+        /* ПАГИНАЦИЯ */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.8rem;
+            margin: 4rem 0;
+        }
+
+        .page-link {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: 1px solid rgba(212, 163, 115, 0.3);
+            border-radius: 50%;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .page-link:hover, .page-link.active {
+            background: #d4a373;
+            border-color: #d4a373;
+            color: #0f1115;
+        }
+
+        /* ФОРМА ОТЗЫВА */
+        .review-form-section {
+            background: rgba(26, 29, 36, 0.5);
+            border: 1px solid rgba(212, 163, 115, 0.2);
+            border-radius: 40px;
+            padding: 3rem;
+            margin: 5rem 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #d4a373;
+        }
+
+        .form-subtitle {
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 2.5rem;
+        }
+
+        .review-form {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: rgba(255,255,255,0.8);
+            font-weight: 500;
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            background: rgba(15, 17, 21, 0.8);
+            border: 1px solid rgba(212, 163, 115, 0.2);
+            border-radius: 16px;
+            padding: 1rem 1.2rem;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: #d4a373;
+            box-shadow: 0 0 0 3px rgba(212, 163, 115, 0.2);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .rating-select {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .rating-star {
+            font-size: 2rem;
+            color: rgba(255,255,255,0.3);
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .rating-star:hover, .rating-star.active {
+            color: #d4a373;
+        }
+
+        .form-submit {
+            grid-column: span 2;
+            background: #d4a373;
+            color: #0f1115;
+            border: none;
+            padding: 1.2rem 2rem;
+            border-radius: 60px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 1rem;
+        }
+
+        .form-submit:hover {
+            background: #e6b78b;
+            transform: scale(1.02);
+        }
+
+        /* ФУТЕР */
+        .footer {
+            background: #1a1d24;
+            border-radius: 30px 30px 0 0;
+            padding: 4rem 3rem 2rem;
+            margin-top: 5rem;
+            border-top: 1px solid rgba(212, 163, 115, 0.3);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-col h4 {
+            color: #d4a373;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-about p {
+            color: rgba(255,255,255,0.7);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            transition: color 0.2s;
+            font-size: 1rem;
+        }
+
+        .footer-links a:hover {
+            color: #d4a373;
+        }
+
+        .footer-contact p {
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .footer-contact i {
+            color: #d4a373;
+            width: 20px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(212, 163, 115, 0.1);
+            border-radius: 50%;
+            color: #d4a373;
+            text-decoration: none;
+            transition: all 0.2s;
+            font-size: 1.2rem;
+        }
+
+        .social-links a:hover {
+            background: #d4a373;
+            color: #0f1115;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            color: rgba(255,255,255,0.5);
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-bottom-links a {
+            color: rgba(255,255,255,0.5);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-bottom-links a:hover {
+            color: #d4a373;
+        }
+
+        /* АДАПТАЦИЯ */
+        @media (max-width: 900px) {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .review-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .reviews-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .review-form {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+            
+            .form-submit {
+                grid-column: span 1;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .navbar {
+                padding: 1rem;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .nav-links {
+                justify-content: center;
+            }
+            
+            .nav-cities {
+                justify-content: center;
+            }
+            
+            .hero-content {
+                padding: 1rem;
+            }
+            
+            .review-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .review-form-section {
+                padding: 2rem;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ЛИПКАЯ НАВИГАЦИЯ -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">Евгений <span>●</span></a>
+            
+            <div class="nav-links">
+                <a href="index.html#services" class="nav-link">Услуги</a>
+                <a href="index.html#facts" class="nav-link">Факты</a>
+                <a href="#" class="nav-link active">Отзывы</a>
+                <a href="index.html#contact" class="nav-link">Контакты</a>
+                <div class="nav-cities">
+                    <span>МСК</span>
+                    <span>СПб</span>
+                    <span>Казань</span>
+                    <span>BE</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ПЕРВАЯ СЕКЦИЯ: ВАНТА + ГЕРОЙ -->
+    <section class="hero-section">
+        <div id="vanta-bg"></div>
+        
+        <div class="hero-content">
+            <div class="hero-main">
+                <div class="hero-greeting">Честные отзывы</div>
+                <h1 class="hero-title">
+                    Что говорят<br><strong>клиенты</strong>
+                </h1>
+                <div class="hero-desc">
+                    Не верьте на слово — читайте реальные отзывы людей, для которых я строил, отделывал и помогал с подсобными работами.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ВТОРАЯ СЕКЦИЯ -->
+    <section class="content-section">
+        <div class="content-container">
+            
+            <!-- Статистика отзывов -->
+            <div class="review-stats">
+                <div class="review-stat-card reveal-scale">
+                    <div class="review-stat-number">87</div>
+                    <div class="review-stat-label">всего отзывов</div>
+                </div>
+                <div class="review-stat-card reveal-scale" style="transition-delay: 0.1s;">
+                    <div class="review-stat-number">4.9</div>
+                    <div class="review-stat-label">средний рейтинг</div>
+                </div>
+                <div class="review-stat-card reveal-scale" style="transition-delay: 0.2s;">
+                    <div class="review-stat-number">43</div>
+                    <div class="review-stat-label">с фото объектов</div>
+                </div>
+                <div class="review-stat-card reveal-scale" style="transition-delay: 0.3s;">
+                    <div class="review-stat-number">12</div>
+                    <div class="review-stat-label">повторных клиентов</div>
+                </div>
+            </div>
+
+            <!-- Фильтры -->
+            <div class="reviews-filter reveal">
+                <button class="filter-btn active">Все отзывы</button>
+                <button class="filter-btn">Монолит</button>
+                <button class="filter-btn">Отделка</button>
+                <button class="filter-btn">Подсобный</button>
+                <button class="filter-btn">С фото</button>
+            </div>
+
+            <!-- Сетка отзывов -->
+            <div class="reviews-grid">
+                
+                <!-- Отзыв 1 -->
+                <div class="review-card reveal-scale">
+                    <div class="review-header">
+                        <div class="review-avatar">А</div>
+                        <div class="review-author">
+                            <h4>Алексей Морозов</h4>
+                            <div class="review-meta">
+                                <span class="review-rating">★★★★★</span>
+                                <span>·</span>
+                                <span>12.03.2025</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="review-service">Монолит</div>
+                    <div class="review-content">
+                        <i class="fas fa-quote-left"></i> Евгений делал нам монолитную плиту под коттедж в Новой Москве. Очень доволен подходом: сначала всё обсудили, посчитали, никаких лишних цифр. Бетон заливали по графику, армирование четкое. Прошло полгода — ни одной трещины. Рекомендую тем, кто ищет ответственного прораба, а не просто "шабашников".
+                    </div>
+                    <div class="review-footer">
+                        <span class="review-project"><i class="fas fa-map-pin"></i> Новая Москва</span>
+                        <span>✅ объект сдан</span>
+                    </div>
+                </div>
+
+                <!-- Отзыв 2 -->
+                <div class="review-card reveal-scale" style="transition-delay: 0.1s;">
+                    <div class="review-header">
+                        <div class="review-avatar">Е</div>
+                        <div class="review-author">
+                            <h4>Екатерина Волкова</h4>
+                            <div class="review-meta">
+                                <span class="review-rating">★★★★★</span>
+                                <span>·</span>
+                                <span>05.03.2025</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="review-service">Отделка</div>
+                    <div class="review-content">
+                        <i class="fas fa-quote-left"></i> Делали дизайнерский ремонт в квартире на Фрунзенской. Самое сложное — ванная с микроцементом, боялась, что будет криво. Евгений лично приезжал, контролировал каждый слой. Результат — космос! Материалы помог закупить со скидкой, ещё и смету уложились. Буду советовать знакомым.
+                    </div>
+                    <div class="review-footer">
+                        <span class="review-project"><i class="fas fa-map-pin"></i> Москва, м. Фрунзенская</span>
+                        <span>✅ есть фото объекта</span>
+                    </div>
+                </div>
+
+                <!-- Отзыв 3 -->
+                <div class="review-card reveal-scale" style="transition-delay: 0.2s;">
+                    <div class="review-header">
+                        <div class="review-avatar">Д</div>
+                        <div class="review-author">
+                            <h4>Дмитрий Кузнецов</h4>
+                            <div class="review-meta">
+                                <span class="review-rating">★★★★★</span>
+                                <span>·</span>
+                                <span>22.02.2025</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="review-service">Подсобный</div>
+                    <div class="review-content">
+                        <i class="fas fa-quote-left"></i> Нужны были руки на демонтаж старой отделки в коммерческом помещении. Евгений прислал троих ребят, которые за 2 дня всё сломали, вынесли и даже подмели за собой. Без перекуров, без пьянки, просто работали. Оплата по договоренности, всё честно. Теперь буду звать только его.
+                    </div>
+                    <div class="review-footer">
+                        <span class="review-project"><i class="fas fa-map-pin"></i> СПб, Невский пр.</span>
+                        <span>✅ срочный заказ</span>
+                    </div>
+                </div>
+
+                <!-- Отзыв 4 -->
+                <div class="review-card reveal-scale" style="transition-delay: 0.3s;">
+                    <div class="review-header">
+                        <div class="review-avatar">С</div>
+                        <div class="review-author">
+                            <h4>Сергей Иващенко</h4>
+                            <div class="review-meta">
+                                <span class="review-rating">★★★★☆</span>
+                                <span>·</span>
+                                <span>15.02.2025</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="review-service">Монолит</div>
+                    <div class="review-content">
+                        <i class="fas fa-quote-left"></i> Делали фундамент под гараж с подвалом. Евгений предложил усиленный вариант, так как грунт сложный. В процессе была небольшая заминка с доставкой арматуры, но быстро перестроились. По качеству вопросов нет, стоит добротно. Единственное — хотелось бы больше фото процесса, но это мелочи.
+                    </div>
+                    <div class="review-footer">
+                        <span class="review-project"><i class="fas fa-map-pin"></i> Казань</span>
+                        <span>✅ сложный грунт</span>
+                    </div>
+                </div>
+
+                <!-- Отзыв 5 -->
+                <div class="review-card reveal-scale" style="transition-delay: 0.4s;">
+                    <div class="review-header">
+                        <div class="review-avatar">О</div>
+                        <div class="review-author">
+                            <h4>Ольга Смирнова</h4>
+                            <div class="review-meta">
+                                <span class="review-rating">★★★★★</span>
+                                <span>·</span>
+                                <span>03.02.2025</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="review-service">Отделка</div>
+                    <div class="review-content">
+                        <i class="fas fa-quote-left"></i> Евгений делал отделку в нашей двушке на Василеостровской. Выбирали долго, боялись нарваться на халтурщиков. Попали в точку! Работали аккуратно, шум вывозили вовремя, соседи не жаловались. Самое главное — Евгений сам всё курировал, не перекладывал на рабочих. Теперь у нас самый красивый ремонт на этаже!
+                    </div>
+                    <div class="review-footer">
+                        <span class="review-project"><i class="fas fa-map-pin"></i> СПб, В.О.</span>
+                        <span>✅ есть фото объекта</span>
+                    </div>
+                </div>
+
+                <!-- Отзыв 6 -->
+                <div class="review-card reveal-scale" style="transition-delay: 0.5s;">
+                    <div class="review-header">
+                        <div class="review-avatar">Т</div>
+                        <div class="review-author">
+                            <h4>Тимур Ахметов</h4>
+                            <div class="review-meta">
+                                <span class="review-rating">★★★★★</span>
+                                <span>·</span>
+                                <span>25.01.2025</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="review-service">Подсобный</div>
+                    <div class="review-content">
+                        <i class="fas fa-quote-left"></i> Заказывал бригаду на погрузку и вывоз строительного мусора после сноса перегородок. Приехали трое, всё сделали за 4 часа, включая уборку подъезда. Цена была озвучена сразу, не менялась. Отдельно порадовало, что ребята помогли с погрузкой тяжелых мешков, хотя это не входило в задачу. Спасибо!
+                    </div>
+                    <div class="review-footer">
+                        <span class="review-project"><i class="fas fa-map-pin"></i> Казань</span>
+                        <span>✅ срочно</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Пагинация -->
+            <div class="pagination reveal">
+                <a href="#" class="page-link active">1</a>
+                <a href="#" class="page-link">2</a>
+                <a href="#" class="page-link">3</a>
+                <a href="#" class="page-link">4</a>
+                <a href="#" class="page-link"><i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <!-- Форма для отзыва -->
+            <div class="review-form-section reveal-scale" id="add-review">
+                <h3 class="form-title">Оставить отзыв</h3>
+                <p class="form-subtitle">Расскажите о вашем опыте работы — это поможет другим клиентам сделать правильный выбор</p>
+                
+                <form class="review-form">
+                    <div class="form-group">
+                        <label class="form-label">Ваше имя</label>
+                        <input type="text" class="form-input" placeholder="Например: Александр" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Город / объект</label>
+                        <input type="text" class="form-input" placeholder="Москва, ЖК 'Триколор'" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Услуга</label>
+                        <select class="form-select" required>
+                            <option value="" disabled selected>Выберите услугу</option>
+                            <option value="monolith">Монолит</option>
+                            <option value="finishing">Отделочные работы</option>
+                            <option value="auxiliary">Подсобный / демонтаж</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Оценка</label>
+                        <div class="rating-select">
+                            <span class="rating-star active">★</span>
+                            <span class="rating-star">★</span>
+                            <span class="rating-star">★</span>
+                            <span class="rating-star">★</span>
+                            <span class="rating-star">★</span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label class="form-label">Ваш отзыв</label>
+                        <textarea class="form-textarea" placeholder="Напишите подробнее о вашем опыте..." required></textarea>
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label class="form-label">Фото объекта (если есть)</label>
+                        <input type="file" class="form-input" accept="image/*">
+                    </div>
+                    
+                    <button type="submit" class="form-submit">
+                        Отправить отзыв <i class="fas fa-arrow-right"></i>
+                    </button>
+                </form>
+            </div>
+
+            <!-- ФУТЕР -->
+            <footer class="footer">
+                <div class="footer-grid">
+                    <div class="footer-col footer-about reveal-left">
+                        <h4>Евгений</h4>
+                        <p>Лично отвечаю за качество на каждом объекте. Строительный подряд без посредников и лишних обещаний.</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-whatsapp"></i></a>
+                            <a href="#"><i class="fab fa-telegram"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="footer-col reveal">
+                        <h4>Услуги</h4>
+                        <ul class="footer-links">
+                            <li><a href="#">Монолитные работы</a></li>
+                            <li><a href="#">Отделка помещений</a></li>
+                            <li><a href="#">Подсобные работы</a></li>
+                            <li><a href="#">Демонтаж и вывоз</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-col reveal" style="transition-delay: 0.1s;">
+                        <h4>Информация</h4>
+                        <ul class="footer-links">
+                            <li><a href="#">Портфолио</a></li>
+                            <li><a href="#">Отзывы</a></li>
+                            <li><a href="#">Вакансии</a></li>
+                            <li><a href="#">Реквизиты</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-col footer-contact reveal-right">
+                        <h4>Контакты</h4>
+                        <p><i class="fas fa-phone"></i> +375 (11) 111-11-11</p>
+                        <p><i class="fas fa-envelope"></i> evgeny@build.msk.ru</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Москва, СПб, Казань</p>
+                        <p><i class="fas fa-globe"></i> Бельгия (Bruxelles)</p>
+                    </div>
+                </div>
+                
+                <div class="footer-bottom reveal">
+                    <div>© 2025 Евгений. Все права защищены</div>
+                    <div class="footer-bottom-links">
+                        <a href="#">Политика конфиденциальности</a>
+                        <a href="#">Договор оферты</a>
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+    </section>
+
+    <!-- Подключаем Vanta -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.net.min.js"></script>
+
+    <script>
+        // Инициализация Vanta
+        VANTA.NET({
+            el: "#vanta-bg",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            color: 0xd4a373,
+            backgroundColor: 0x0f1115,
+            points: 13.00,
+            maxDistance: 22.00,
+            spacing: 17.00,
+            showDots: false
+        });
+
+        // Анимации при скролле
+        function revealOnScroll() {
+            const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+            
+            for (let i = 0; i < reveals.length; i++) {
+                const windowHeight = window.innerHeight;
+                const revealTop = reveals[i].getBoundingClientRect().top;
+                const revealPoint = 150;
+                
+                if (revealTop < windowHeight - revealPoint) {
+                    reveals[i].classList.add('active');
+                }
+            }
+        }
+
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', revealOnScroll);
+        
+        // Дополнительно активируем видимые элементы при загрузке
+        setTimeout(revealOnScroll, 100);
+
+        // Работа фильтров (демо)
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                // Здесь можно добавить логику фильтрации отзывов
+                alert('В реальном проекте здесь будет фильтрация отзывов');
+            });
+        });
+
+        // Работа рейтинга в форме
+        const ratingStars = document.querySelectorAll('.rating-star');
+        ratingStars.forEach((star, index) => {
+            star.addEventListener('click', function() {
+                ratingStars.forEach((s, i) => {
+                    if (i <= index) {
+                        s.classList.add('active');
+                    } else {
+                        s.classList.remove('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

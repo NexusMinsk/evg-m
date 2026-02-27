@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Евгений | Обо мне</title>
+    <!-- Шрифты -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Merriweather:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* СБРОС И БАЗА */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f1115;
+            color: #fff;
+            overflow-x: hidden;
+            line-height: 1.5;
+        }
+
+        /* АНИМАЦИИ ПОЯВЛЕНИЯ */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* ДЛЯ ЭЛЕМЕНТОВ, ПОЯВЛЯЮЩИХСЯ ПРИ СКРОЛЛЕ */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);
+        }
+
+        .reveal-left.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(30px);
+            transition: all 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);
+        }
+
+        .reveal-right.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-scale {
+            opacity: 0;
+            transform: scale(0.95);
+            transition: all 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);
+        }
+
+        .reveal-scale.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* ЛИПКАЯ НАВИГАЦИЯ */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(15, 17, 21, 0.92);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(212, 163, 115, 0.3);
+            padding: 1.2rem 2rem;
+            width: 100%;
+            animation: slideInLeft 0.6s ease-out;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .nav-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .nav-logo span {
+            color: #d4a373;
+            font-family: 'Merriweather', serif;
+            font-style: italic;
+            font-weight: 300;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+            padding: 0.5rem 0;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: #d4a373;
+            border-bottom-color: #d4a373;
+        }
+
+        .nav-cities {
+            display: flex;
+            gap: 1.2rem;
+            background: rgba(212, 163, 115, 0.1);
+            padding: 0.5rem 1.5rem;
+            border-radius: 40px;
+            border: 1px solid rgba(212, 163, 115, 0.3);
+        }
+
+        .nav-cities span {
+            color: #fff;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        /* ПЕРВАЯ СЕКЦИЯ С VANTA */
+        .hero-section {
+            position: relative;
+            min-height: 70vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #vanta-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: 0.9;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            min-height: 70vh;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 2rem 1.5rem;
+            width: 100%;
+        }
+
+        .hero-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 2rem 0 3rem 0;
+            max-width: 900px;
+        }
+
+        .hero-greeting {
+            font-size: 1.2rem;
+            color: #d4a373;
+            margin-bottom: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            animation: slideInLeft 0.8s 0.2s ease-out forwards;
+            opacity: 0;
+        }
+
+        .hero-title {
+            font-size: clamp(2.8rem, 8vw, 5.2rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.8rem;
+            font-family: 'Merriweather', serif;
+            font-weight: 300;
+            color: #fff;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            animation: fadeUp 1s 0.3s ease-out forwards;
+            opacity: 0;
+        }
+
+        .hero-title strong {
+            font-weight: 700;
+            color: #d4a373;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .hero-desc {
+            font-size: 1.2rem;
+            max-width: 600px;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 2.5rem;
+            border-left: 3px solid #d4a373;
+            padding-left: 1.8rem;
+            animation: slideInRight 0.8s 0.4s ease-out forwards;
+            opacity: 0;
+        }
+
+        /* ВТОРАЯ СЕКЦИЯ */
+        .content-section {
+            background-color: #0f1115;
+            position: relative;
+            z-index: 5;
+            padding: 5rem 2rem;
+        }
+
+        .content-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            font-family: 'Merriweather', serif;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .section-title span {
+            color: #d4a373;
+            font-weight: 400;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 4rem;
+            max-width: 700px;
+        }
+
+        /* ОСНОВНОЙ БЛОК ОБО МНЕ */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 4rem;
+            margin-bottom: 6rem;
+            align-items: start;
+        }
+
+        /* Фото и личная информация */
+        .about-photo-card {
+            background: linear-gradient(145deg, #1a1d24, #0f1115);
+            border: 1px solid rgba(212, 163, 115, 0.2);
+            border-radius: 40px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .photo-placeholder {
+            width: 100%;
+            aspect-ratio: 1/1;
+            background: linear-gradient(135deg, #2a2d34, #1a1d24);
+            border-radius: 30px;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(212, 163, 115, 0.3);
+        }
+
+        .photo-placeholder i {
+            font-size: 8rem;
+            color: #d4a373;
+            opacity: 0.5;
+        }
+
+        .about-name {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #d4a373;
+        }
+
+        .about-title {
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .about-stats-small {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin: 1.5rem 0;
+            padding: 1.5rem 0;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .stat-small {
+            text-align: center;
+        }
+
+        .stat-small .number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #d4a373;
+        }
+
+        .stat-small .label {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .about-contacts {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            text-align: left;
+            margin-top: 1.5rem;
+        }
+
+        .about-contacts p {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .about-contacts i {
+            color: #d4a373;
+            width: 20px;
+        }
+
+        /* История и принципы */
+        .about-story {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .story-block {
+            background: rgba(26, 29, 36, 0.3);
+            border-radius: 30px;
+            padding: 2rem;
+            border-left: 4px solid #d4a373;
+        }
+
+        .story-block h3 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #d4a373;
+        }
+
+        .story-block p {
+            color: rgba(255,255,255,0.8);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .story-block p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Цитата */
+        .quote-block {
+            background: linear-gradient(145deg, #1a1d24, #0f1115);
+            border: 1px solid rgba(212, 163, 115, 0.3);
+            border-radius: 40px;
+            padding: 3rem;
+            margin: 3rem 0;
+            position: relative;
+        }
+
+        .quote-icon {
+            font-size: 4rem;
+            color: #d4a373;
+            opacity: 0.2;
+            position: absolute;
+            top: 1rem;
+            left: 2rem;
+        }
+
+        .quote-text {
+            font-size: 1.6rem;
+            line-height: 1.5;
+            font-family: 'Merriweather', serif;
+            font-style: italic;
+            color: #fff;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .quote-author {
+            text-align: center;
+            margin-top: 2rem;
+            color: #d4a373;
+            font-weight: 500;
+        }
+
+        /* КЛЮЧЕВЫЕ ЦИФРЫ */
+        .key-numbers {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin: 5rem 0;
+        }
+
+        .number-card {
+            background: linear-gradient(145deg, #1a1d24, #0f1115);
+            border: 1px solid rgba(212, 163, 115, 0.2);
+            border-radius: 30px;
+            padding: 2.5rem 1.5rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .number-card:hover {
+            border-color: #d4a373;
+            transform: translateY(-6px);
+        }
+
+        .number-card .big-number {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: #d4a373;
+            font-family: 'Merriweather', serif;
+            line-height: 1;
+            margin-bottom: 1rem;
+        }
+
+        .number-card .number-label {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .number-card .number-desc {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.9rem;
+        }
+
+        /* ПРИНЦИПЫ РАБОТЫ */
+        .principles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+
+        .principle-card {
+            background: rgba(26, 29, 36, 0.5);
+            border: 1px solid rgba(212, 163, 115, 0.2);
+            border-radius: 30px;
+            padding: 2.5rem 2rem;
+            transition: all 0.3s;
+        }
+
+        .principle-card:hover {
+            border-color: #d4a373;
+            transform: translateY(-4px);
+        }
+
+        .principle-icon {
+            font-size: 2.5rem;
+            color: #d4a373;
+            margin-bottom: 1.5rem;
+        }
+
+        .principle-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .principle-card p {
+            color: rgba(255,255,255,0.7);
+            line-height: 1.6;
+        }
+
+        /* ОБРАЗОВАНИЕ И ОПЫТ */
+        .timeline {
+            margin: 5rem 0;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: rgba(212, 163, 115, 0.2);
+        }
+
+        .timeline-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .timeline-year {
+            text-align: right;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #d4a373;
+            font-family: 'Merriweather', serif;
+            padding-right: 2rem;
+        }
+
+        .timeline-content {
+            background: rgba(26, 29, 36, 0.5);
+            border: 1px solid rgba(212, 163, 115, 0.2);
+            border-radius: 24px;
+            padding: 1.5rem;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 2rem;
+            width: 16px;
+            height: 16px;
+            background: #d4a373;
+            border-radius: 50%;
+        }
+
+        .timeline-content h4 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #d4a373;
+        }
+
+        .timeline-content p {
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* ГАЛЕРЕЯ (ФОТО С ОБЪЕКТОВ) */
+        .gallery-section {
+            margin: 5rem 0;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .gallery-item {
+            background: linear-gradient(145deg, #1a1d24, #0f1115);
+            border: 1px solid rgba(212, 163, 115, 0.2);
+            border-radius: 24px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .gallery-item:hover {
+            border-color: #d4a373;
+            transform: translateY(-4px);
+        }
+
+        .gallery-icon {
+            font-size: 3rem;
+            color: #d4a373;
+            margin-bottom: 1rem;
+            opacity: 0.7;
+        }
+
+        .gallery-item p {
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* ПАРТНЕРЫ И КЛИЕНТЫ */
+        .partners-section {
+            margin: 5rem 0;
+        }
+
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .partner-card {
+            background: rgba(26, 29, 36, 0.5);
+            border: 1px solid rgba(212, 163, 115, 0.2);
+            border-radius: 20px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .partner-card:hover {
+            border-color: #d4a373;
+        }
+
+        .partner-icon {
+            font-size: 2rem;
+            color: #d4a373;
+            margin-bottom: 0.5rem;
+        }
+
+        .partner-name {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .partner-role {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.4);
+        }
+
+        /* ПРИЗЫВ К ДЕЙСТВИЮ */
+        .cta-large {
+            background: linear-gradient(135deg, #d4a373 0%, #b88a5e 100%);
+            border-radius: 40px;
+            padding: 4rem;
+            text-align: center;
+            margin: 5rem 0;
+            color: #0f1115;
+        }
+
+        .cta-large h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .cta-large p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-large .cta-button {
+            background: #0f1115;
+            color: #fff;
+            border: none;
+            padding: 1.5rem 4rem;
+            border-radius: 60px;
+            font-size: 1.4rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .cta-large .cta-button:hover {
+            background: #fff;
+            color: #0f1115;
+            transform: scale(1.02);
+        }
+
+        /* ФУТЕР */
+        .footer {
+            background: #1a1d24;
+            border-radius: 30px 30px 0 0;
+            padding: 4rem 3rem 2rem;
+            margin-top: 5rem;
+            border-top: 1px solid rgba(212, 163, 115, 0.3);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-col h4 {
+            color: #d4a373;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-about p {
+            color: rgba(255,255,255,0.7);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            transition: color 0.2s;
+            font-size: 1rem;
+        }
+
+        .footer-links a:hover {
+            color: #d4a373;
+        }
+
+        .footer-contact p {
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .footer-contact i {
+            color: #d4a373;
+            width: 20px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(212, 163, 115, 0.1);
+            border-radius: 50%;
+            color: #d4a373;
+            text-decoration: none;
+            transition: all 0.2s;
+            font-size: 1.2rem;
+        }
+
+        .social-links a:hover {
+            background: #d4a373;
+            color: #0f1115;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            color: rgba(255,255,255,0.5);
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-bottom-links a {
+            color: rgba(255,255,255,0.5);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-bottom-links a:hover {
+            color: #d4a373;
+        }
+
+        /* АДАПТАЦИЯ */
+        @media (max-width: 1100px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .key-numbers {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .principles-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .partners-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 900px) {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .timeline::before {
+                left: 30px;
+            }
+            
+            .timeline-item {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+                margin-left: 50px;
+            }
+            
+            .timeline-year {
+                text-align: left;
+                padding-right: 0;
+            }
+            
+            .timeline-content::before {
+                left: -38px;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .navbar {
+                padding: 1rem;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .nav-links {
+                justify-content: center;
+            }
+            
+            .nav-cities {
+                justify-content: center;
+            }
+            
+            .hero-content {
+                padding: 1rem;
+            }
+            
+            .key-numbers {
+                grid-template-columns: 1fr;
+            }
+            
+            .principles-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .partners-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .cta-large {
+                padding: 2rem;
+            }
+            
+            .cta-large h2 {
+                font-size: 1.8rem;
+            }
+            
+            .quote-text {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ЛИПКАЯ НАВИГАЦИЯ -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">Евгений <span>●</span></a>
+            
+            <div class="nav-links">
+                <a href="services.html" class="nav-link">Услуги</a>
+                <a href="facts.html" class="nav-link">Факты</a>
+                <a href="reviews.html" class="nav-link">Отзывы</a>
+                <a href="about.html" class="nav-link active">Обо мне</a>
+                <a href="contacts.html" class="nav-link">Контакты</a>
+                <div class="nav-cities">
+                    <span>МСК</span>
+                    <span>СПб</span>
+                    <span>Казань</span>
+                    <span>BE</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ПЕРВАЯ СЕКЦИЯ: ВАНТА + ГЕРОЙ -->
+    <section class="hero-section">
+        <div id="vanta-bg"></div>
+        
+        <div class="hero-content">
+            <div class="hero-main">
+                <div class="hero-greeting">Личный подход</div>
+                <h1 class="hero-title">
+                    Евгений — <strong>ваш</strong><br>человек на стройке
+                </h1>
+                <div class="hero-desc">
+                    Не просто прораб, а человек, который лично отвечает за каждый объект. 15 лет в строительстве, 87 сданных объектов, 0 посредников.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ВТОРАЯ СЕКЦИЯ -->
+    <section class="content-section">
+        <div class="content-container">
+            
+            <!-- Основной блок обо мне -->
+            <div class="about-grid">
+                
+                <!-- Левая колонка - фото и личное -->
+                <div class="about-photo-card reveal-left">
+                    <div class="photo-placeholder">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h2 class="about-name">Евгений</h2>
+                    <div class="about-title">Строительный подрядчик</div>
+                    
+                    <div class="about-stats-small">
+                        <div class="stat-small">
+                            <div class="number">15+</div>
+                            <div class="label">лет опыта</div>
+                        </div>
+                        <div class="stat-small">
+                            <div class="number">87</div>
+                            <div class="label">объектов</div>
+                        </div>
+                        <div class="stat-small">
+                            <div class="number">4</div>
+                            <div class="label">города</div>
+                        </div>
+                        <div class="stat-small">
+                            <div class="number">0</div>
+                            <div class="label">посредников</div>
+                        </div>
+                    </div>
+                    
+                    <div class="about-contacts">
+                        <p><i class="fas fa-phone"></i> +375 (11) 111-11-11</p>
+                        <p><i class="fas fa-envelope"></i> evgeny@build.msk.ru</p>
+                        <p><i class="fab fa-whatsapp"></i> WhatsApp (предпочитаю)</p>
+                        <p><i class="fab fa-telegram"></i> @evgeny_build</p>
+                    </div>
+                    
+                    <div class="social-links" style="justify-content: center; margin-top: 1.5rem;">
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Правая колонка - история -->
+                <div class="about-story reveal-right">
+                    
+                    <div class="story-block">
+                        <h3>Как я пришел в стройку</h3>
+                        <p>Всё началось в 2008 году, когда я, студент строительного университета, устроился разнорабочим на стройку. Деньги нужны были всегда, но оказалось, что бетон и арматура — это моё. Я быстро понял, как устроены процессы, и уже через год стал бригадиром.</p>
+                        <p>С тех пор я прошёл путь от подсобника до подрядчика, который сам выходит на объекты и контролирует каждый этап. За моими плечами — десятки объектов: от маленьких квартир до крупных ЖК. И я до сих пор люблю то, что делаю.</p>
+                    </div>
+                    
+                    <div class="story-block">
+                        <h3>Почему мне доверяют</h3>
+                        <p>На стройке главное — не обещать, а делать. Я никогда не беру деньги вперёд за то, что не сделал. Никогда не ставлю "левые" сметы. Если вижу, что можно сделать дешевле и лучше — скажу об этом.</p>
+                        <p>Я лично приезжаю на объекты, проверяю геометрию, качество материалов, работу бригад. Для меня каждый объект — как свой собственный. Я хочу, чтобы через 5 лет клиент вспоминал меня добрым словом, а не искал, как переделать.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Цитата -->
+            <div class="quote-block reveal-scale">
+                <div class="quote-icon"><i class="fas fa-quote-right"></i></div>
+                <div class="quote-text">
+                    "Я не работаю с посредниками. Если вы звоните мне — вы говорите с тем, кто будет лично отвечать за результат. Без переводчиков и менеджеров."
+                </div>
+                <div class="quote-author">— Евгений</div>
+            </div>
+
+            <!-- Ключевые цифры -->
+            <h2 class="section-title reveal">Цифры <span>обо мне</span></h2>
+            <div class="key-numbers">
+                <div class="number-card reveal-scale">
+                    <div class="big-number">15+</div>
+                    <div class="number-label">Лет в стройке</div>
+                    <div class="number-desc">с 2008 года непрерывно</div>
+                </div>
+                <div class="number-card reveal-scale" style="transition-delay: 0.1s;">
+                    <div class="big-number">87</div>
+                    <div class="number-label">Объектов</div>
+                    <div class="number-desc">сдано лично под ключ</div>
+                </div>
+                <div class="number-card reveal-scale" style="transition-delay: 0.2s;">
+                    <div class="big-number">32</div>
+                    <div class="number-label">Постоянных клиента</div>
+                    <div class="number-desc">вернулись или порекомендовали</div>
+                </div>
+                <div class="number-card reveal-scale" style="transition-delay: 0.3s;">
+                    <div class="big-number">4</div>
+                    <div class="number-label">Города</div>
+                    <div class="number-desc">МСК, СПб, Казань, Бельгия</div>
+                </div>
+            </div>
+
+            <!-- Принципы работы -->
+            <h2 class="section-title reveal">Мои <span>принципы</span></h2>
+            <div class="principles-grid">
+                
+                <div class="principle-card reveal-scale">
+                    <div class="principle-icon"><i class="fas fa-handshake"></i></div>
+                    <h3>Честность</h3>
+                    <p>Никаких скрытых платежей. Смета, которую вы видите — это та сумма, которую заплатите. Если появляются непредвиденные расходы, обсуждаем до начала работ.</p>
+                </div>
+                
+                <div class="principle-card reveal-scale" style="transition-delay: 0.1s;">
+                    <div class="principle-icon"><i class="fas fa-calendar-check"></i></div>
+                    <h3>Сроки</h3>
+                    <p>Если сказал, что сделаю за месяц — значит сделаю. Или предупрежу заранее, если форс-мажор. Просрочки бывают только по объективным причинам.</p>
+                </div>
+                
+                <div class="principle-card reveal-scale" style="transition-delay: 0.2s;">
+                    <div class="principle-icon"><i class="fas fa-ruler-combined"></i></div>
+                    <h3>Качество</h3>
+                    <p>Я лично проверяю геометрию, качество бетона, укладку плитки. Если что-то не так — переделываем за мой счёт. Это редко, но бывает.</p>
+                </div>
+                
+                <div class="principle-card reveal-scale" style="transition-delay: 0.3s;">
+                    <div class="principle-icon"><i class="fas fa-phone-alt"></i></div>
+                    <h3>Доступность</h3>
+                    <p>Я всегда на связи. Можете звонить в любое время, если вопрос срочный. Не люблю, когда клиенты не могут дозвониться до прораба.</p>
+                </div>
+                
+                <div class="principle-card reveal-scale" style="transition-delay: 0.4s;">
+                    <div class="principle-icon"><i class="fas fa-tools"></i></div>
+                    <h3>Свой инструмент</h3>
+                    <p>Вся бригада работает своим инструментом. Вам не нужно покупать перфоратор или бетономешалку — у нас всё есть.</p>
+                </div>
+                
+                <div class="principle-card reveal-scale" style="transition-delay: 0.5s;">
+                    <div class="principle-icon"><i class="fas fa-broom"></i></div>
+                    <h3>Чистота</h3>
+                    <p>После нас не остаётся мусора. Каждый день убираем, вывозим, подметаем. Соседи не жалуются, заказчик доволен.</p>
+                </div>
+            </div>
+
+            <!-- Таймлайн (опыт) -->
+            <h2 class="section-title reveal">Мой <span>путь</span></h2>
+            <div class="timeline">
+                
+                <div class="timeline-item">
+                    <div class="timeline-year">2008-2010</div>
+                    <div class="timeline-content">
+                        <h4>Разнорабочий</h4>
+                        <p>Начинал с самых низов: таскал бетон, разгружал арматуру, учился у старых мастеров. Понял, как строить нельзя и как нужно.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-year">2011-2014</div>
+                    <div class="timeline-content">
+                        <h4>Бригадир</h4>
+                        <p>Управлял бригадой из 10-15 человек на объектах в Москве. Отвечал за монолит и бетонные работы.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-year">2015-2018</div>
+                    <div class="timeline-content">
+                        <h4>Прораб</h4>
+                        <p>Вёл объекты под ключ: от фундамента до отделки. Начал брать заказы напрямую, без компаний-посредников.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-year">2019-2025</div>
+                    <div class="timeline-content">
+                        <h4>Подрядчик</h4>
+                        <p>Работаю на себя, с проверенными бригадами. Выезжаю в другие города, расширил географию до Бельгии.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Галерея (фото с объектов) -->
+            <h2 class="section-title reveal">Я на <span>объектах</span></h2>
+            <div class="gallery-section">
+                <div class="gallery-grid">
+                    
+                    <div class="gallery-item reveal-scale">
+                        <div class="gallery-icon"><i class="fas fa-hard-hat"></i></div>
+                        <p>На объекте в Новой Москве, приёмка бетона</p>
+                    </div>
+                    
+                    <div class="gallery-item reveal-scale" style="transition-delay: 0.1s;">
+                        <div class="gallery-icon"><i class="fas fa-draw-polygon"></i></div>
+                        <p>Проверка геометрии стен, ЖК "Триколор"</p>
+                    </div>
+                    
+                    <div class="gallery-item reveal-scale" style="transition-delay: 0.2s;">
+                        <div class="gallery-icon"><i class="fas fa-paint-roller"></i></div>
+                        <p>Сдача отделки, СПб, м. Горьковская</p>
+                    </div>
+                    
+                    <div class="gallery-item reveal-scale" style="transition-delay: 0.3s;">
+                        <div class="gallery-icon"><i class="fas fa-truck"></i></div>
+                        <p>Контроль доставки материалов, Казань</p>
+                    </div>
+                    
+                    <div class="gallery-item reveal-scale" style="transition-delay: 0.4s;">
+                        <div class="gallery-icon"><i class="fas fa-users"></i></div>
+                        <p>Бригада на объекте, постановка задачи</p>
+                    </div>
+                    
+                    <div class="gallery-item reveal-scale" style="transition-delay: 0.5s;">
+                        <div class="gallery-icon"><i class="fas fa-clipboard-check"></i></div>
+                        <p>Приёмка работы у отделочников</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Партнеры и клиенты -->
+            <h2 class="section-title reveal">Кто мне <span>доверяет</span></h2>
+            <div class="partners-section">
+                <div class="partners-grid">
+                    
+                    <div class="partner-card reveal-scale">
+                        <div class="partner-icon"><i class="fas fa-building"></i></div>
+                        <div class="partner-name">ЖК "Дом на набережной"</div>
+                        <div class="partner-role">Застройщик</div>
+                    </div>
+                    
+                    <div class="partner-card reveal-scale" style="transition-delay: 0.1s;">
+                        <div class="partner-icon"><i class="fas fa-home"></i></div>
+                        <div class="partner-name">Архитектурное бюро "Проект"</div>
+                        <div class="partner-role">Партнёр по отделке</div>
+                    </div>
+                    
+                    <div class="partner-card reveal-scale" style="transition-delay: 0.2s;">
+                        <div class="partner-icon"><i class="fas fa-store"></i></div>
+                        <div class="partner-name">Ресторан "На Волге"</div>
+                        <div class="partner-role">Коммерческий объект</div>
+                    </div>
+                    
+                    <div class="partner-card reveal-scale" style="transition-delay: 0.3s;">
+                        <div class="partner-icon"><i class="fas fa-tshirt"></i></div>
+                        <div class="partner-name">Бутик "Stone"</div>
+                        <div class="partner-role">Отделка премиум</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- БОЛЬШОЙ ПРИЗЫВ -->
+            <div class="cta-large reveal-scale">
+                <h2>Хотите надёжного подрядчика?</h2>
+                <p>Позвоните или напишите — обсудим ваш объект</p>
+                <button class="cta-button" onclick="alert('Евгений: +375 (11) 111-11-11\nПишите в WhatsApp/Telegram')">
+                    Связаться со мной <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+
+            <!-- ФУТЕР -->
+            <footer class="footer">
+                <div class="footer-grid">
+                    <div class="footer-col footer-about reveal-left">
+                        <h4>Евгений</h4>
+                        <p>Лично отвечаю за качество на каждом объекте. Строительный подряд без посредников и лишних обещаний.</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-whatsapp"></i></a>
+                            <a href="#"><i class="fab fa-telegram"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="footer-col reveal">
+                        <h4>Услуги</h4>
+                        <ul class="footer-links">
+                            <li><a href="#">Монолитные работы</a></li>
+                            <li><a href="#">Отделка помещений</a></li>
+                            <li><a href="#">Подсобные работы</a></li>
+                            <li><a href="#">Демонтаж и вывоз</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-col reveal" style="transition-delay: 0.1s;">
+                        <h4>Информация</h4>
+                        <ul class="footer-links">
+                            <li><a href="#">Портфолио</a></li>
+                            <li><a href="#">Отзывы</a></li>
+                            <li><a href="#">Вакансии</a></li>
+                            <li><a href="#">Реквизиты</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-col footer-contact reveal-right">
+                        <h4>Контакты</h4>
+                        <p><i class="fas fa-phone"></i> +375 (11) 111-11-11</p>
+                        <p><i class="fas fa-envelope"></i> evgeny@build.msk.ru</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Москва, СПб, Казань</p>
+                        <p><i class="fas fa-globe"></i> Бельгия (Bruxelles)</p>
+                    </div>
+                </div>
+                
+                <div class="footer-bottom reveal">
+                    <div>© 2025 Евгений. Все права защищены</div>
+                    <div class="footer-bottom-links">
+                        <a href="#">Политика конфиденциальности</a>
+                        <a href="#">Договор оферты</a>
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+    </section>
+
+    <!-- Подключаем Vanta -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.net.min.js"></script>
+
+    <script>
+        // Инициализация Vanta
+        VANTA.NET({
+            el: "#vanta-bg",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            color: 0xd4a373,
+            backgroundColor: 0x0f1115,
+            points: 13.00,
+            maxDistance: 22.00,
+            spacing: 17.00,
+            showDots: false
+        });
+
+        // Анимации при скролле
+        function revealOnScroll() {
+            const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+            
+            for (let i = 0; i < reveals.length; i++) {
+                const windowHeight = window.innerHeight;
+                const revealTop = reveals[i].getBoundingClientRect().top;
+                const revealPoint = 150;
+                
+                if (revealTop < windowHeight - revealPoint) {
+                    reveals[i].classList.add('active');
+                }
+            }
+        }
+
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', revealOnScroll);
+        
+        setTimeout(revealOnScroll, 100);
+    </script>
+</body>
+</html>

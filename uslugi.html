@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Евгений | Услуги</title>
+    <!-- Шрифты -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Merriweather:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* СБРОС И БАЗА */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f1115;
+            color: #fff;
+            overflow-x: hidden;
+            line-height: 1.5;
+        }
+
+        /* АНИМАЦИИ ПОЯВЛЕНИЯ */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* ДЛЯ ЭЛЕМЕНТОВ, ПОЯВЛЯЮЩИХСЯ ПРИ СКРОЛЛЕ */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);
+        }
+
+        .reveal-left.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(30px);
+            transition: all 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);
+        }
+
+        .reveal-right.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-scale {
+            opacity: 0;
+            transform: scale(0.95);
+            transition: all 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);
+        }
+
+        .reveal-scale.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* ЛИПКАЯ НАВИГАЦИЯ */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(15, 17, 21, 0.92);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(212, 163, 115, 0.3);
+            padding: 1.2rem 2rem;
+            width: 100%;
+            animation: slideInLeft 0.6s ease-out;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .nav-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .nav-logo span {
+            color: #d4a373;
+            font-family: 'Merriweather', serif;
+            font-style: italic;
+            font-weight: 300;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+            padding: 0.5rem 0;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: #d4a373;
+            border-bottom-color: #d4a373;
+        }
+
+        .nav-cities {
+            display: flex;
+            gap: 1.2rem;
+            background: rgba(212, 163, 115, 0.1);
+            padding: 0.5rem 1.5rem;
+            border-radius: 40px;
+            border: 1px solid rgba(212, 163, 115, 0.3);
+        }
+
+        .nav-cities span {
+            color: #fff;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        /* ПЕРВАЯ СЕКЦИЯ С VANTA */
+        .hero-section {
+            position: relative;
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #vanta-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: 0.9;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            min-height: 60vh;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 2rem 1.5rem;
+            width: 100%;
+        }
+
+        .hero-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 2rem 0 3rem 0;
+            max-width: 900px;
+        }
+
+        .hero-greeting {
+            font-size: 1.2rem;
+            color: #d4a373;
+            margin-bottom: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            animation: slideInLeft 0.8s 0.2s ease-out forwards;
+            opacity: 0;
+        }
+
+        .hero-title {
+            font-size: clamp(2.8rem, 8vw, 5.2rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.8rem;
+            font-family: 'Merriweather', serif;
+            font-weight: 300;
+            color: #fff;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            animation: fadeUp 1s 0.3s ease-out forwards;
+            opacity: 0;
+        }
+
+        .hero-title strong {
+            font-weight: 700;
+            color: #d4a373;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .hero-desc {
+            font-size: 1.2rem;
+            max-width: 600px;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 2.5rem;
+            border-left: 3px solid #d4a373;
+            padding-left: 1.8rem;
+            animation: slideInRight 0.8s 0.4s ease-out forwards;
+            opacity: 0;
+        }
+
+        /* ВТОРАЯ СЕКЦИЯ */
+        .content-section {
+            background-color: #0f1115;
+            position: relative;
+            z-index: 5;
+            padding: 5rem 2rem;
+        }
+
+        .content-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            font-family: 'Merriweather', serif;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .section-title span {
+            color: #d4a373;
+            font-weight: 400;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 4rem;
+            max-width: 700px;
+        }
+
+        /* НАВИГАЦИЯ ПО УСЛУГАМ */
+        .services-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 4rem;
+        }
+
+        .service-nav-btn {
+            background: transparent;
+            border: 1px solid rgba(212, 163, 115, 0.3);
+            color: rgba(255,255,255,0.7);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .service-nav-btn:hover, .service-nav-btn.active {
+            background: #d4a373;
+            border-color: #d4a373;
+            color: #0f1115;
+        }
+
+        /* ДЕТАЛЬНЫЕ УСЛУГИ */
+        .service-detail {
+            margin-bottom: 6rem;
+            scroll-margin-top: 100px;
+        }
+
+        .service-header {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .service-icon-large {
+            font-size: 4rem;
+            background: rgba(212, 163, 115, 0.1);
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 30px;
+            border: 1px solid rgba(212, 163, 115, 0.3);
+        }
+
+        .service-header h2 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #d4a373;
+        }
+
+        /* СЕТКА ДЛЯ КОНТЕНТА УСЛУГИ */
+        .service-content {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .service-description p {
+            color: rgba(255,255,255,0.8);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .service-features {
+            background: linear-gradient(145deg, #1a1d24, #0f1115);
+            border: 1px solid rgba(212, 163, 115, 0.2);
+            border-radius: 30px;
+            padding: 2rem;
+        }
+
+        .service-features h3 {
+            font-size: 1.5rem;
+            color: #d4a373;
+            margin-bottom: 1.5rem;
+        }
+
+        .features-list {
+            list-style: none;
+        }
+
+        .features-list li {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.2rem;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .features-list li i {
+            color: #d4a373;
+            width: 24px;
+        }
+
+        /* ПРИМЕРЫ РАБОТ */
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .example-card {
+            background: rgba(26, 29, 36, 0.5);
+            border: 1px solid rgba(212, 163, 115, 0.2);
+            border-radius: 24px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .example-card:hover {
+            border-color: #d4a373;
+            transform: translateY(-4px);
+        }
+
+        .example-icon {
+            font-size: 2rem;
+            color: #d4a373;
+            margin-bottom: 1rem;
+        }
+
+        .example-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .example-card p {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .example-tag {
+            display: inline-block;
+            background: rgba(212, 163, 115, 0.1);
+            color: #d4a373;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        /* ЭТАПЫ РАБОТ */
+        .stages-section {
+            margin: 5rem 0;
+            background: linear-gradient(145deg, #1a1d24, #0f1115);
+            border: 1px solid rgba(212, 163, 115, 0.2);
+            border-radius: 40px;
+            padding: 3rem;
+        }
+
+        .stages-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .stage-item {
+            text-align: center;
+            position: relative;
+        }
+
+        .stage-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: rgba(212, 163, 115, 0.2);
+            font-family: 'Merriweather', serif;
+            margin-bottom: 1rem;
+        }
+
+        .stage-item h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: #d4a373;
+        }
+
+        .stage-item p {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.95rem;
+        }
+
+        /* ПРАЙС-ЛИСТ */
+        .price-section {
+            margin: 5rem 0;
+        }
+
+        .price-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .price-card {
+            background: rgba(26, 29, 36, 0.5);
+            border: 1px solid rgba(212, 163, 115, 0.2);
+            border-radius: 24px;
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+
+        .price-card:hover {
+            border-color: #d4a373;
+        }
+
+        .price-card h4 {
+            font-size: 1.3rem;
+            color: #d4a373;
+            margin-bottom: 1rem;
+        }
+
+        .price-amount {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .price-amount small {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.4);
+        }
+
+        .price-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .price-features li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.95rem;
+        }
+
+        .price-features li i {
+            color: #d4a373;
+            font-size: 0.8rem;
+        }
+
+        .price-note {
+            color: rgba(255,255,255,0.4);
+            font-size: 0.85rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* ПРИМЕРЫ ОБЪЕКТОВ */
+        .portfolio-preview {
+            margin: 5rem 0;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .portfolio-item {
+            background: linear-gradient(145deg, #1a1d24, #0f1115);
+            border: 1px solid rgba(212, 163, 115, 0.2);
+            border-radius: 30px;
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+
+        .portfolio-item:hover {
+            border-color: #d4a373;
+            transform: translateY(-4px);
+        }
+
+        .portfolio-item h4 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #d4a373;
+        }
+
+        .portfolio-detail {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.8rem;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .portfolio-detail span {
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .portfolio-tag {
+            display: inline-block;
+            background: rgba(212, 163, 115, 0.1);
+            color: #d4a373;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-top: 1rem;
+        }
+
+        /* ПРИЗЫВ К ДЕЙСТВИЮ */
+        .cta-large {
+            background: linear-gradient(135deg, #d4a373 0%, #b88a5e 100%);
+            border-radius: 40px;
+            padding: 4rem;
+            text-align: center;
+            margin: 5rem 0;
+            color: #0f1115;
+        }
+
+        .cta-large h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .cta-large p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-large .cta-button {
+            background: #0f1115;
+            color: #fff;
+            border: none;
+            padding: 1.5rem 4rem;
+            border-radius: 60px;
+            font-size: 1.4rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .cta-large .cta-button:hover {
+            background: #fff;
+            color: #0f1115;
+            transform: scale(1.02);
+        }
+
+        /* ФУТЕР */
+        .footer {
+            background: #1a1d24;
+            border-radius: 30px 30px 0 0;
+            padding: 4rem 3rem 2rem;
+            margin-top: 5rem;
+            border-top: 1px solid rgba(212, 163, 115, 0.3);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-col h4 {
+            color: #d4a373;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-about p {
+            color: rgba(255,255,255,0.7);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            transition: color 0.2s;
+            font-size: 1rem;
+        }
+
+        .footer-links a:hover {
+            color: #d4a373;
+        }
+
+        .footer-contact p {
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .footer-contact i {
+            color: #d4a373;
+            width: 20px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(212, 163, 115, 0.1);
+            border-radius: 50%;
+            color: #d4a373;
+            text-decoration: none;
+            transition: all 0.2s;
+            font-size: 1.2rem;
+        }
+
+        .social-links a:hover {
+            background: #d4a373;
+            color: #0f1115;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            color: rgba(255,255,255,0.5);
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-bottom-links a {
+            color: rgba(255,255,255,0.5);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-bottom-links a:hover {
+            color: #d4a373;
+        }
+
+        /* АДАПТАЦИЯ */
+        @media (max-width: 1100px) {
+            .service-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .stages-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .examples-grid, .portfolio-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 900px) {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .service-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .navbar {
+                padding: 1rem;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .nav-links {
+                justify-content: center;
+            }
+            
+            .nav-cities {
+                justify-content: center;
+            }
+            
+            .hero-content {
+                padding: 1rem;
+            }
+            
+            .stages-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .examples-grid, .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .cta-large {
+                padding: 2rem;
+            }
+            
+            .cta-large h2 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ЛИПКАЯ НАВИГАЦИЯ -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">Евгений <span>●</span></a>
+            
+            <div class="nav-links">
+                <a href="#" class="nav-link active">Услуги</a>
+                <a href="facts.html" class="nav-link">Факты</a>
+                <a href="reviews.html" class="nav-link">Отзывы</a>
+                <a href="contacts.html" class="nav-link">Контакты</a>
+                <div class="nav-cities">
+                    <span>МСК</span>
+                    <span>СПб</span>
+                    <span>Казань</span>
+                    <span>BE</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ПЕРВАЯ СЕКЦИЯ: ВАНТА + ГЕРОЙ -->
+    <section class="hero-section">
+        <div id="vanta-bg"></div>
+        
+        <div class="hero-content">
+            <div class="hero-main">
+                <div class="hero-greeting">Что я делаю</div>
+                <h1 class="hero-title">
+                    Мои <strong>услуги</strong>
+                </h1>
+                <div class="hero-desc">
+                    Комплексный подход к строительству и отделке. 
+                    Беру объекты под ключ или отдельные этапы — как вам удобнее.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ВТОРАЯ СЕКЦИЯ -->
+    <section class="content-section">
+        <div class="content-container">
+            
+            <!-- Навигация по услугам -->
+            <div class="services-nav reveal">
+                <button class="service-nav-btn active" data-service="monolith">Монолит</button>
+                <button class="service-nav-btn" data-service="finishing">Отделочные</button>
+                <button class="service-nav-btn" data-service="auxiliary">Подсобный</button>
+                <button class="service-nav-btn" data-service="demolition">Демонтаж</button>
+            </div>
+
+            <!-- МОНОЛИТ -->
+            <div id="monolith" class="service-detail">
+                <div class="service-header reveal-left">
+                    <div class="service-icon-large">🏗️</div>
+                    <h2>Монолитные работы</h2>
+                </div>
+                
+                <div class="service-content">
+                    <div class="service-description reveal">
+                        <p>Занимаюсь монолитным строительством с 2008 года. За моими плечами — жилые комплексы, частные коттеджи, коммерческие объекты. Люблю бетон за честность: если сделал правильно — простоит десятилетия.</p>
+                        <p>Работаю как по готовым проектам, так и помогаю с расчётами, если проекта нет. Лично контролирую армирование, качество бетона, геометрию. Никакого "авось" — только СНиПы и здравый смысл.</p>
+                        <p>Использую современную опалубку, бетононасосы, глубинные вибраторы — всё, чтобы конструкция была монолитной без пустот и раковин.</p>
+                    </div>
+                    
+                    <div class="service-features reveal-right">
+                        <h3>Что входит</h3>
+                        <ul class="features-list">
+                            <li><i class="fas fa-check-circle"></i> Фундаменты (лента, плита, сваи)</li>
+                            <li><i class="fas fa-check-circle"></i> Стены и перекрытия</li>
+                            <li><i class="fas fa-check-circle"></i> Лестницы любой сложности</li>
+                            <li><i class="fas fa-check-circle"></i> Колонны, ригели, балки</li>
+                            <li><i class="fas fa-check-circle"></i> Подпорные стены</li>
+                            <li><i class="fas fa-check-circle"></i> Малые архитектурные формы</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Примеры работ -->
+                <h3 class="reveal" style="margin: 2rem 0 1.5rem;">Примеры работ</h3>
+                <div class="examples-grid">
+                    <div class="example-card reveal-scale">
+                        <div class="example-icon">🏢</div>
+                        <h4>ЖК "Дом на набережной"</h4>
+                        <p>3 секции монолита, 22 этажа</p>
+                        <span class="example-tag">Москва, 2024</span>
+                    </div>
+                    <div class="example-card reveal-scale" style="transition-delay: 0.1s;">
+                        <div class="example-icon">🏠</div>
+                        <h4>Коттедж в Новой Москве</h4>
+                        <p>Монолитная плита + стены</p>
+                        <span class="example-tag">350 м², 2023</span>
+                    </div>
+                    <div class="example-card reveal-scale" style="transition-delay: 0.2s;">
+                        <div class="example-icon">🏭</div>
+                        <h4>Складской комплекс</h4>
+                        <p>Колонны, перекрытия, пандусы</p>
+                        <span class="example-tag">СПб, 2023</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ОТДЕЛОЧНЫЕ -->
+            <div id="finishing" class="service-detail" style="margin-top: 5rem;">
+                <div class="service-header reveal-left">
+                    <div class="service-icon-large">🪚</div>
+                    <h2>Отделочные работы</h2>
+                </div>
+                
+                <div class="service-content">
+                    <div class="service-description reveal">
+                        <p>Отделка — это лицо объекта. Я делаю так, чтобы через год не хотелось переделывать. Начинаю с подготовки: стяжки, штукатурка, шумоизоляция. Заканчиваю "белым ключом" с покраской, обоями, плиткой.</p>
+                        <p>Особое внимание уделяю геометрии — стены должны быть ровные, углы 90°, пол без перепадов. Работаю с разными материалами: от классики до микроцемента и декоративных штукатурок.</p>
+                        <p>Бригады притираются на первом объекте — дальше работают как часы. Лично принимаю каждый этап, чтобы результат радовал и меня, и заказчика.</p>
+                    </div>
+                    
+                    <div class="service-features reveal-right">
+                        <h3>Виды отделки</h3>
+                        <ul class="features-list">
+                            <li><i class="fas fa-check-circle"></i> Черновая отделка (стяжки, штукатурка)</li>
+                            <li><i class="fas fa-check-circle"></i> Чистовая под ключ</li>
+                            <li><i class="fas fa-check-circle"></i> Укладка плитки, керамогранита</li>
+                            <li><i class="fas fa-check-circle"></i> Паркет, инженерная доска</li>
+                            <li><i class="fas fa-check-circle"></i> Декоративные покрытия</li>
+                            <li><i class="fas fa-check-circle"></i> Покраска, обои, панели</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Примеры работ -->
+                <h3 class="reveal" style="margin: 2rem 0 1.5rem;">Недавние проекты</h3>
+                <div class="examples-grid">
+                    <div class="example-card reveal-scale">
+                        <div class="example-icon">🛋️</div>
+                        <h4>Квартира на Фрунзенской</h4>
+                        <p>Дизайнерский ремонт, микроцемент</p>
+                        <span class="example-tag">78 м², 2024</span>
+                    </div>
+                    <div class="example-card reveal-scale" style="transition-delay: 0.1s;">
+                        <div class="example-icon">🏛️</div>
+                        <h4>Таунхаус в Казани</h4>
+                        <p>Отделка под ключ, терраса</p>
+                        <span class="example-tag">150 м², 2023</span>
+                    </div>
+                    <div class="example-card reveal-scale" style="transition-delay: 0.2s;">
+                        <div class="example-icon">🚿</div>
+                        <h4>Ванная с мрамором</h4>
+                        <p>Эксклюзивная отделка</p>
+                        <span class="example-tag">СПб, 2024</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ПОДСОБНЫЙ -->
+            <div id="auxiliary" class="service-detail" style="margin-top: 5rem;">
+                <div class="service-header reveal-left">
+                    <div class="service-icon-large">👥</div>
+                    <h2>Подсобные работы</h2>
+                </div>
+                
+                <div class="service-content">
+                    <div class="service-description reveal">
+                        <p>Нужны руки на объект? Бывает, что своих рабочих не хватает, или нужно сделать быстро и без головной боли. Я предоставляю проверенных подсобников, которые не пьют, не курят на объекте и реально работают.</p>
+                        <p>Все ребята с опытом, знают технику безопасности, умеют обращаться с инструментом. Могу прислать как одного человека, так и бригаду на сложные задачи.</p>
+                        <p>Оплата почасовая или сдельная — как договоримся. Главное, чтобы результат был, а не просто "отсидели часы".</p>
+                    </div>
+                    
+                    <div class="service-features reveal-right">
+                        <h3>Что делаем</h3>
+                        <ul class="features-list">
+                            <li><i class="fas fa-check-circle"></i> Погрузка/разгрузка материалов</li>
+                            <li><i class="fas fa-check-circle"></i> Поднос и подача</li>
+                            <li><i class="fas fa-check-circle"></i> Уборка территории</li>
+                            <li><i class="fas fa-check-circle"></i> Вынос мусора</li>
+                            <li><i class="fas fa-check-circle"></i> Помощь рабочим</li>
+                            <li><i class="fas fa-check-circle"></i> Земляные работы</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Преимущества -->
+                <div class="stages-section reveal-scale">
+                    <h3 style="font-size: 2rem; text-align: center;">Почему мои подсобники лучшие</h3>
+                    <div class="stages-grid" style="margin-top: 3rem;">
+                        <div class="stage-item">
+                            <div class="stage-number">01</div>
+                            <h4>Трезвые</h4>
+                            <p>Строгий отбор, никакого алкоголя на объекте</p>
+                        </div>
+                        <div class="stage-item">
+                            <div class="stage-number">02</div>
+                            <h4>Опытные</h4>
+                            <p>Минимум 3 года в стройке</p>
+                        </div>
+                        <div class="stage-item">
+                            <div class="stage-number">03</div>
+                            <h4>Быстрые</h4>
+                            <p>Приезжаем на следующий день</p>
+                        </div>
+                        <div class="stage-item">
+                            <div class="stage-number">04</div>
+                            <h4>С инструментом</h4>
+                            <p>Перфораторы, лопаты, тачки — всё своё</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ДЕМОНТАЖ -->
+            <div id="demolition" class="service-detail" style="margin-top: 5rem;">
+                <div class="service-header reveal-left">
+                    <div class="service-icon-large">🔨</div>
+                    <h2>Демонтаж и вывоз</h2>
+                </div>
+                
+                <div class="service-content">
+                    <div class="service-description reveal">
+                        <p>Начинаете ремонт с чистого листа? Или нужно снести старые конструкции? Занимаюсь демонтажом любой сложности — от обоев до несущих стен (с согласованием).</p>
+                        <p>Работаем аккуратно, стараемся не шуметь в неположенные часы, подъезды защищаем, мусор собираем в мешки. Могу организовать контейнер и вывоз на свалку — чтобы вы вообще не думали об этом.</p>
+                    </div>
+                    
+                    <div class="service-features reveal-right">
+                        <h3>Виды демонтажа</h3>
+                        <ul class="features-list">
+                            <li><i class="fas fa-check-circle"></i> Снос стен и перегородок</li>
+                            <li><i class="fas fa-check-circle"></i> Демонтаж полов, стяжек</li>
+                            <li><i class="fas fa-check-circle"></i> Снятие отделки</li>
+                            <li><i class="fas fa-check-circle"></i> Вывоз мусора</li>
+                            <li><i class="fas fa-check-circle"></i> Утилизация</li>
+                            <li><i class="fas fa-check-circle"></i> Подготовка под чистовую</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Цены (примерные) -->
+                <div class="price-section">
+                    <h3 class="reveal" style="margin-bottom: 2rem;">Примерные расценки</h3>
+                    <div class="price-grid">
+                        <div class="price-card reveal-scale">
+                            <h4>Демонтаж обоев</h4>
+                            <div class="price-amount">от 100 ₽ <small>/м²</small></div>
+                            <ul class="price-features">
+                                <li><i class="fas fa-check"></i> Снятие старых покрытий</li>
+                                <li><i class="fas fa-check"></i> Зачистка стен</li>
+                                <li><i class="fas fa-check"></i> Уборка мусора</li>
+                            </ul>
+                            <div class="price-note">Цена зависит от слоёв</div>
+                        </div>
+                        <div class="price-card reveal-scale" style="transition-delay: 0.1s;">
+                            <h4>Демонтаж стен</h4>
+                            <div class="price-amount">от 1 500 ₽ <small>/м²</small></div>
+                            <ul class="price-features">
+                                <li><i class="fas fa-check"></i> Кирпич, бетон, гипсолит</li>
+                                <li><i class="fas fa-check"></i> Сбор мусора в мешки</li>
+                                <li><i class="fas fa-check"></i> Погрузка</li>
+                            </ul>
+                            <div class="price-note">Несущие — по проекту</div>
+                        </div>
+                        <div class="price-card reveal-scale" style="transition-delay: 0.2s;">
+                            <h4>Вывоз мусора</h4>
+                            <div class="price-amount">от 8 000 ₽ <small>/контейнер</small></div>
+                            <ul class="price-features">
+                                <li><i class="fas fa-check"></i> Контейнер 8 м³</li>
+                                <li><i class="fas fa-check"></i> Погрузка включена</li>
+                                <li><i class="fas fa-check"></i> Утилизация</li>
+                            </ul>
+                            <div class="price-note">Скидка на большие объёмы</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ЭТАПЫ РАБОТЫ -->
+            <div class="stages-section reveal-scale">
+                <h2 style="font-size: 2.5rem; text-align: center;">Как я <span style="color: #d4a373;">работаю</span></h2>
+                <div class="stages-grid">
+                    <div class="stage-item">
+                        <div class="stage-number">01</div>
+                        <h4>Звонок / заявка</h4>
+                        <p>Обсуждаем задачу, договариваемся о встрече</p>
+                    </div>
+                    <div class="stage-item">
+                        <div class="stage-number">02</div>
+                        <h4>Осмотр объекта</h4>
+                        <p>Приезжаю, смотрю, замеряю, советую</p>
+                    </div>
+                    <div class="stage-item">
+                        <div class="stage-number">03</div>
+                        <h4>Смета и договор</h4>
+                        <p>Прописываем всё прозрачно, без скрытых цен</p>
+                    </div>
+                    <div class="stage-item">
+                        <div class="stage-number">04</div>
+                        <h4>Работа и контроль</h4>
+                        <p>Лично курирую объект, вы приезжаете на приёмку</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ПРИМЕРЫ ОБЪЕКТОВ (портфолио) -->
+            <div class="portfolio-preview">
+                <h2 class="section-title reveal">Последние <span>объекты</span></h2>
+                
+                <div class="portfolio-grid">
+                    <div class="portfolio-item reveal-scale">
+                        <h4>ЖК "Триколор"</h4>
+                        <div class="portfolio-detail">Площадь: <span>25 этажей</span></div>
+                        <div class="portfolio-detail">Работы: <span>Монолит каркаса</span></div>
+                        <div class="portfolio-detail">Срок: <span>2024</span></div>
+                        <div class="portfolio-tag">Москва</div>
+                    </div>
+                    <div class="portfolio-item reveal-scale" style="transition-delay: 0.1s;">
+                        <h4>Коттедж "Сосны"</h4>
+                        <div class="portfolio-detail">Площадь: <span>320 м²</span></div>
+                        <div class="portfolio-detail">Работы: <span>Отделка под ключ</span></div>
+                        <div class="portfolio-detail">Срок: <span>2023-2024</span></div>
+                        <div class="portfolio-tag">Новая Москва</div>
+                    </div>
+                    <div class="portfolio-item reveal-scale" style="transition-delay: 0.2s;">
+                        <h4>Ресторан "На Волге"</h4>
+                        <div class="portfolio-detail">Площадь: <span>450 м²</span></div>
+                        <div class="portfolio-detail">Работы: <span>Демонтаж + отделка</span></div>
+                        <div class="portfolio-detail">Срок: <span>2024</span></div>
+                        <div class="portfolio-tag">Казань</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- БОЛЬШОЙ ПРИЗЫВ -->
+            <div class="cta-large reveal-scale">
+                <h2>Нужна консультация?</h2>
+                <p>Приеду на объект, посмотрю, посчитаю — бесплатно</p>
+                <button class="cta-button" onclick="alert('Евгений: +375 (11) 111-11-11\nПишите в WhatsApp/Telegram')">
+                    Связаться со мной <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+
+            <!-- ФУТЕР -->
+            <footer class="footer">
+                <div class="footer-grid">
+                    <div class="footer-col footer-about reveal-left">
+                        <h4>Евгений</h4>
+                        <p>Лично отвечаю за качество на каждом объекте. Строительный подряд без посредников и лишних обещаний.</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-whatsapp"></i></a>
+                            <a href="#"><i class="fab fa-telegram"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="footer-col reveal">
+                        <h4>Услуги</h4>
+                        <ul class="footer-links">
+                            <li><a href="#monolith">Монолитные работы</a></li>
+                            <li><a href="#finishing">Отделка помещений</a></li>
+                            <li><a href="#auxiliary">Подсобные работы</a></li>
+                            <li><a href="#demolition">Демонтаж и вывоз</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-col reveal" style="transition-delay: 0.1s;">
+                        <h4>Информация</h4>
+                        <ul class="footer-links">
+                            <li><a href="#">Портфолио</a></li>
+                            <li><a href="#">Отзывы</a></li>
+                            <li><a href="#">Вакансии</a></li>
+                            <li><a href="#">Реквизиты</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-col footer-contact reveal-right">
+                        <h4>Контакты</h4>
+                        <p><i class="fas fa-phone"></i> +375 (11) 111-11-11</p>
+                        <p><i class="fas fa-envelope"></i> evgeny@build.msk.ru</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Москва, СПб, Казань</p>
+                        <p><i class="fas fa-globe"></i> Бельгия (Bruxelles)</p>
+                    </div>
+                </div>
+                
+                <div class="footer-bottom reveal">
+                    <div>© 2025 Евгений. Все права защищены</div>
+                    <div class="footer-bottom-links">
+                        <a href="#">Политика конфиденциальности</a>
+                        <a href="#">Договор оферты</a>
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+    </section>
+
+    <!-- Подключаем Vanta -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.net.min.js"></script>
+
+    <script>
+        // Инициализация Vanta
+        VANTA.NET({
+            el: "#vanta-bg",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            color: 0xd4a373,
+            backgroundColor: 0x0f1115,
+            points: 13.00,
+            maxDistance: 22.00,
+            spacing: 17.00,
+            showDots: false
+        });
+
+        // Анимации при скролле
+        function revealOnScroll() {
+            const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+            
+            for (let i = 0; i < reveals.length; i++) {
+                const windowHeight = window.innerHeight;
+                const revealTop = reveals[i].getBoundingClientRect().top;
+                const revealPoint = 150;
+                
+                if (revealTop < windowHeight - revealPoint) {
+                    reveals[i].classList.add('active');
+                }
+            }
+        }
+
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', revealOnScroll);
+        
+        setTimeout(revealOnScroll, 100);
+
+        // Навигация по услугам
+        const navBtns = document.querySelectorAll('.service-nav-btn');
+        
+        navBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                navBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                const serviceId = this.getAttribute('data-service');
+                let targetId = '';
+                
+                switch(serviceId) {
+                    case 'monolith': targetId = 'monolith'; break;
+                    case 'finishing': targetId = 'finishing'; break;
+                    case 'auxiliary': targetId = 'auxiliary'; break;
+                    case 'demolition': targetId = 'demolition'; break;
+                }
+                
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Евгений | Контакты</title>
+    <!-- Шрифты -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Merriweather:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* СБРОС И БАЗА */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f1115;
+            color: #fff;
+            overflow-x: hidden;
+            line-height: 1.5;
+        }
+
+        /* АНИМАЦИИ ПОЯВЛЕНИЯ */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* ДЛЯ ЭЛЕМЕНТОВ, ПОЯВЛЯЮЩИХСЯ ПРИ СКРОЛЛЕ */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);
+        }
+
+        .reveal-left.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(30px);
+            transition: all 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);
+        }
+
+        .reveal-right.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-scale {
+            opacity: 0;
+            transform: scale(0.95);
+            transition: all 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);
+        }
+
+        .reveal-scale.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* ЛИПКАЯ НАВИГАЦИЯ */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(15, 17, 21, 0.92);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(212, 163, 115, 0.3);
+            padding: 1.2rem 2rem;
+            width: 100%;
+            animation: slideInLeft 0.6s ease-out;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .nav-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .nav-logo span {
+            color: #d4a373;
+            font-family: 'Merriweather', serif;
+            font-style: italic;
+            font-weight: 300;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+            padding: 0.5rem 0;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: #d4a373;
+            border-bottom-color: #d4a373;
+        }
+
+        .nav-cities {
+            display: flex;
+            gap: 1.2rem;
+            background: rgba(212, 163, 115, 0.1);
+            padding: 0.5rem 1.5rem;
+            border-radius: 40px;
+            border: 1px solid rgba(212, 163, 115, 0.3);
+        }
+
+        .nav-cities span {
+            color: #fff;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        /* ПЕРВАЯ СЕКЦИЯ С VANTA */
+        .hero-section {
+            position: relative;
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #vanta-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: 0.9;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            min-height: 60vh;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 2rem 1.5rem;
+            width: 100%;
+        }
+
+        .hero-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 2rem 0 3rem 0;
+            max-width: 900px;
+        }
+
+        .hero-greeting {
+            font-size: 1.2rem;
+            color: #d4a373;
+            margin-bottom: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            animation: slideInLeft 0.8s 0.2s ease-out forwards;
+            opacity: 0;
+        }
+
+        .hero-title {
+            font-size: clamp(2.8rem, 8vw, 5.2rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.8rem;
+            font-family: 'Merriweather', serif;
+            font-weight: 300;
+            color: #fff;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            animation: fadeUp 1s 0.3s ease-out forwards;
+            opacity: 0;
+        }
+
+        .hero-title strong {
+            font-weight: 700;
+            color: #d4a373;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .hero-desc {
+            font-size: 1.2rem;
+            max-width: 600px;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 2.5rem;
+            border-left: 3px solid #d4a373;
+            padding-left: 1.8rem;
+            animation: slideInRight 0.8s 0.4s ease-out forwards;
+            opacity: 0;
+        }
+
+        /* ВТОРАЯ СЕКЦИЯ */
+        .content-section {
+            background-color: #0f1115;
+            position: relative;
+            z-index: 5;
+            padding: 5rem 2rem;
+        }
+
+        .content-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            font-family: 'Merriweather', serif;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .section-title span {
+            color: #d4a373;
+            font-weight: 400;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 4rem;
+            max-width: 700px;
+        }
+
+        /* КОНТАКТНАЯ ИНФОРМАЦИЯ */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 3rem;
+            margin-bottom: 5rem;
+        }
+
+        /* Левая колонка - контакты */
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .contact-card {
+            background: linear-gradient(145deg, #1a1d24, #0f1115);
+            border: 1px solid rgba(212, 163, 115, 0.2);
+            border-radius: 30px;
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+
+        .contact-card:hover {
+            border-color: #d4a373;
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px -10px rgba(212, 163, 115, 0.2);
+        }
+
+        .contact-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #d4a373;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.2rem;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .contact-item i {
+            width: 24px;
+            color: #d4a373;
+            font-size: 1.2rem;
+        }
+
+        .contact-item a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .contact-item a:hover {
+            color: #d4a373;
+        }
+
+        .social-links-large {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-link-large {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: rgba(212, 163, 115, 0.1);
+            border: 1px solid rgba(212, 163, 115, 0.3);
+            border-radius: 50%;
+            color: #d4a373;
+            text-decoration: none;
+            transition: all 0.2s;
+            font-size: 1.4rem;
+        }
+
+        .social-link-large:hover {
+            background: #d4a373;
+            color: #0f1115;
+            transform: scale(1.1);
+        }
+
+        /* Правая колонка - форма */
+        .contact-form-card {
+            background: linear-gradient(145deg, #1a1d24, #0f1115);
+            border: 1px solid rgba(212, 163, 115, 0.2);
+            border-radius: 30px;
+            padding: 2.5rem;
+        }
+
+        .contact-form-card h3 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #d4a373;
+        }
+
+        .contact-form-card p {
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 2rem;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-label {
+            color: rgba(255,255,255,0.8);
+            font-weight: 500;
+        }
+
+        .form-input, .form-textarea {
+            background: rgba(15, 17, 21, 0.8);
+            border: 1px solid rgba(212, 163, 115, 0.2);
+            border-radius: 16px;
+            padding: 1rem 1.2rem;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+
+        .form-input:focus, .form-textarea:focus {
+            outline: none;
+            border-color: #d4a373;
+            box-shadow: 0 0 0 3px rgba(212, 163, 115, 0.2);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-submit {
+            background: #d4a373;
+            color: #0f1115;
+            border: none;
+            padding: 1.2rem 2rem;
+            border-radius: 60px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+        }
+
+        .form-submit:hover {
+            background: #e6b78b;
+            transform: scale(1.02);
+        }
+
+        .form-submit i {
+            transition: transform 0.2s;
+        }
+
+        .form-submit:hover i {
+            transform: translateX(5px);
+        }
+
+        /* КАРТА */
+        .map-section {
+            margin: 5rem 0;
+        }
+
+        .map-container {
+            background: linear-gradient(145deg, #1a1d24, #0f1115);
+            border: 1px solid rgba(212, 163, 115, 0.2);
+            border-radius: 30px;
+            padding: 2rem;
+            height: 450px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .map-placeholder {
+            width: 100%;
+            height: 100%;
+            background: rgba(26, 29, 36, 0.5);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            color: rgba(255,255,255,0.6);
+            border: 1px dashed rgba(212, 163, 115, 0.3);
+        }
+
+        .map-placeholder i {
+            font-size: 4rem;
+            color: #d4a373;
+            opacity: 0.5;
+        }
+
+        .map-cities {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .city-badge {
+            background: rgba(212, 163, 115, 0.1);
+            border: 1px solid rgba(212, 163, 115, 0.3);
+            border-radius: 40px;
+            padding: 0.8rem 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: #fff;
+        }
+
+        .city-badge i {
+            color: #d4a373;
+        }
+
+        /* ЧАСТЫЕ ВОПРОСЫ */
+        .faq-section {
+            margin: 5rem 0;
+        }
+
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .faq-item {
+            background: rgba(26, 29, 36, 0.5);
+            border: 1px solid rgba(212, 163, 115, 0.2);
+            border-radius: 24px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .faq-item:hover {
+            border-color: #d4a373;
+            transform: translateY(-2px);
+        }
+
+        .faq-question {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .faq-question i {
+            color: #d4a373;
+            font-size: 1.2rem;
+        }
+
+        .faq-question h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .faq-answer {
+            color: rgba(255,255,255,0.7);
+            line-height: 1.6;
+            padding-left: 2.2rem;
+        }
+
+        /* ФУТЕР */
+        .footer {
+            background: #1a1d24;
+            border-radius: 30px 30px 0 0;
+            padding: 4rem 3rem 2rem;
+            margin-top: 5rem;
+            border-top: 1px solid rgba(212, 163, 115, 0.3);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-col h4 {
+            color: #d4a373;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-about p {
+            color: rgba(255,255,255,0.7);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            transition: color 0.2s;
+            font-size: 1rem;
+        }
+
+        .footer-links a:hover {
+            color: #d4a373;
+        }
+
+        .footer-contact p {
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .footer-contact i {
+            color: #d4a373;
+            width: 20px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            color: rgba(255,255,255,0.5);
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-bottom-links a {
+            color: rgba(255,255,255,0.5);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-bottom-links a:hover {
+            color: #d4a373;
+        }
+
+        /* АДАПТАЦИЯ */
+        @media (max-width: 900px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .faq-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .navbar {
+                padding: 1rem;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .nav-links {
+                justify-content: center;
+            }
+            
+            .nav-cities {
+                justify-content: center;
+            }
+            
+            .hero-content {
+                padding: 1rem;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .map-container {
+                height: 350px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ЛИПКАЯ НАВИГАЦИЯ -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">Евгений <span>●</span></a>
+            
+            <div class="nav-links">
+                <a href="index.html#services" class="nav-link">Услуги</a>
+                <a href="index.html#facts" class="nav-link">Факты</a>
+                <a href="reviews.html" class="nav-link">Отзывы</a>
+                <a href="#" class="nav-link active">Контакты</a>
+                <div class="nav-cities">
+                    <span>МСК</span>
+                    <span>СПб</span>
+                    <span>Казань</span>
+                    <span>BE</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ПЕРВАЯ СЕКЦИЯ: ВАНТА + ГЕРОЙ -->
+    <section class="hero-section">
+        <div id="vanta-bg"></div>
+        
+        <div class="hero-content">
+            <div class="hero-main">
+                <div class="hero-greeting">Свяжитесь со мной</div>
+                <h1 class="hero-title">
+                    <strong>Контакты</strong>
+                </h1>
+                <div class="hero-desc">
+                    Работаю в Москве, СПб, Казани и Бельгии. Отвечаю быстро, приезжаю на объекты лично.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ВТОРАЯ СЕКЦИЯ -->
+    <section class="content-section">
+        <div class="content-container">
+            
+            <!-- Контактная информация и форма -->
+            <div class="contact-grid">
+                
+                <!-- Левая колонка - контакты -->
+                <div class="contact-info">
+                    
+                    <!-- Телефон и email -->
+                    <div class="contact-card reveal-left">
+                        <h3>Связь</h3>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <a href="tel:+375111111111">+375 (11) 111-11-11</a>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <a href="mailto:evgeny@build.msk.ru">evgeny@build.msk.ru</a>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fab fa-whatsapp"></i>
+                            <a href="#">WhatsApp (предпочитаемый способ)</a>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fab fa-telegram"></i>
+                            <a href="#">Telegram @evgeny_build</a>
+                        </div>
+                        
+                        <div class="social-links-large">
+                            <a href="#" class="social-link-large"><i class="fab fa-whatsapp"></i></a>
+                            <a href="#" class="social-link-large"><i class="fab fa-telegram"></i></a>
+                            <a href="#" class="social-link-large"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="social-link-large"><i class="fab fa-viber"></i></a>
+                        </div>
+                    </div>
+                    
+                    <!-- Адреса -->
+                    <div class="contact-card reveal-left" style="transition-delay: 0.1s;">
+                        <h3>Города присутствия</h3>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Москва, офис на м. Павелецкая (по предварительной записи)</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Санкт-Петербург, м. Горьковская (объекты)</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Казань, работаю по объектам</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Бельгия, Брюссель (проекты под ключ)</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Время работы -->
+                    <div class="contact-card reveal-left" style="transition-delay: 0.2s;">
+                        <h3>Режим работы</h3>
+                        <div class="contact-item">
+                            <i class="fas fa-clock"></i>
+                            <span>Пн-Пт: 9:00 - 20:00</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-clock"></i>
+                            <span>Сб: 10:00 - 16:00 (только срочные вопросы)</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-clock"></i>
+                            <span>Вс: выходной, но на объектах могу быть</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-clock"></i>
+                            <span>Ответ на сообщения — обычно в течение часа</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Правая колонка - форма -->
+                <div class="contact-form-card reveal-right">
+                    <h3>Напишите мне</h3>
+                    <p>Заполните форму, и я свяжусь с вами в ближайшее время</p>
+                    
+                    <form class="contact-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Имя</label>
+                                <input type="text" class="form-input" placeholder="Как к вам обращаться?" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Город</label>
+                                <input type="text" class="form-input" placeholder="Москва / СПб / Казань" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Телефон</label>
+                                <input type="tel" class="form-input" placeholder="+7 (999) 123-45-67" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-input" placeholder="example@mail.ru">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Услуга</label>
+                            <select class="form-input" required>
+                                <option value="" disabled selected>Выберите направление</option>
+                                <option value="monolith">Монолит</option>
+                                <option value="finishing">Отделочные работы</option>
+                                <option value="auxiliary">Подсобный / демонтаж</option>
+                                <option value="other">Другое</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Сообщение</label>
+                            <textarea class="form-textarea" placeholder="Опишите задачу, примерный объем, сроки..." required></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">
+                                <input type="checkbox" required> Я согласен на обработку персональных данных
+                            </label>
+                        </div>
+                        
+                        <button type="submit" class="form-submit">
+                            Отправить сообщение <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- КАРТА -->
+            <div class="map-section reveal-scale">
+                <h2 class="section-title">География <span>работ</span></h2>
+                
+                <div class="map-container">
+                    <!-- Здесь будет iframe с картой -->
+                    <div class="map-placeholder">
+                        <i class="fas fa-map"></i>
+                        <p>Интерактивная карта с отметками объектов</p>
+                        <p style="font-size: 0.9rem;">Москва · СПб · Казань · Брюссель</p>
+                        
+                        <div class="map-cities">
+                            <div class="city-badge">
+                                <i class="fas fa-check-circle"></i> Москва (43 объекта)
+                            </div>
+                            <div class="city-badge">
+                                <i class="fas fa-check-circle"></i> СПб (28 объектов)
+                            </div>
+                            <div class="city-badge">
+                                <i class="fas fa-check-circle"></i> Казань (12 объектов)
+                            </div>
+                            <div class="city-badge">
+                                <i class="fas fa-check-circle"></i> Бельгия (4 объекта)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ЧАСТЫЕ ВОПРОСЫ -->
+            <div class="faq-section">
+                <h2 class="section-title reveal">Частые <span>вопросы</span></h2>
+                
+                <div class="faq-grid">
+                    
+                    <div class="faq-item reveal-scale">
+                        <div class="faq-question">
+                            <i class="fas fa-question-circle"></i>
+                            <h4>Как быстро выезжаете на объект?</h4>
+                        </div>
+                        <div class="faq-answer">
+                            В Москве и СПб могу приехать на следующий день после звонка. В Казани — в течение 2-3 дней. В Бельгии — по договоренности.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item reveal-scale" style="transition-delay: 0.1s;">
+                        <div class="faq-question">
+                            <i class="fas fa-question-circle"></i>
+                            <h4>Делаете бесплатную смету?</h4>
+                        </div>
+                        <div class="faq-answer">
+                            Да, после осмотра объекта составляю смету бесплатно. Если объект далеко — могу по видео или фото.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item reveal-scale" style="transition-delay: 0.2s;">
+                        <div class="faq-question">
+                            <i class="fas fa-question-circle"></i>
+                            <h4>Работаете с юрлицами?</h4>
+                        </div>
+                        <div class="faq-answer">
+                            Да, заключаем договор, оплата на расчетный счет. Есть все закрывающие документы.
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item reveal-scale" style="transition-delay: 0.3s;">
+                        <div class="faq-question">
+                            <i class="fas fa-question-circle"></i>
+                            <h4>Есть ли гарантия на работы?</h4>
+                        </div>
+                        <div class="faq-answer">
+                            Даю гарантию на монолит — 5 лет, на отделку — 3 года, на подсобные работы — 1 месяц (но обычно все делаем сразу на совесть).
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ФУТЕР -->
+            <footer class="footer">
+                <div class="footer-grid">
+                    <div class="footer-col footer-about reveal-left">
+                        <h4>Евгений</h4>
+                        <p>Лично отвечаю за качество на каждом объекте. Строительный подряд без посредников и лишних обещаний.</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-whatsapp"></i></a>
+                            <a href="#"><i class="fab fa-telegram"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="footer-col reveal">
+                        <h4>Услуги</h4>
+                        <ul class="footer-links">
+                            <li><a href="#">Монолитные работы</a></li>
+                            <li><a href="#">Отделка помещений</a></li>
+                            <li><a href="#">Подсобные работы</a></li>
+                            <li><a href="#">Демонтаж и вывоз</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-col reveal" style="transition-delay: 0.1s;">
+                        <h4>Информация</h4>
+                        <ul class="footer-links">
+                            <li><a href="#">Портфолио</a></li>
+                            <li><a href="#">Отзывы</a></li>
+                            <li><a href="#">Вакансии</a></li>
+                            <li><a href="#">Реквизиты</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-col footer-contact reveal-right">
+                        <h4>Контакты</h4>
+                        <p><i class="fas fa-phone"></i> +375 (11) 111-11-11</p>
+                        <p><i class="fas fa-envelope"></i> evgeny@build.msk.ru</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Москва, СПб, Казань</p>
+                        <p><i class="fas fa-globe"></i> Бельгия (Bruxelles)</p>
+                    </div>
+                </div>
+                
+                <div class="footer-bottom reveal">
+                    <div>© 2025 Евгений. Все права защищены</div>
+                    <div class="footer-bottom-links">
+                        <a href="#">Политика конфиденциальности</a>
+                        <a href="#">Договор оферты</a>
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+    </section>
+
+    <!-- Подключаем Vanta -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.net.min.js"></script>
+
+    <script>
+        // Инициализация Vanta
+        VANTA.NET({
+            el: "#vanta-bg",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            color: 0xd4a373,
+            backgroundColor: 0x0f1115,
+            points: 13.00,
+            maxDistance: 22.00,
+            spacing: 17.00,
+            showDots: false
+        });
+
+        // Анимации при скролле
+        function revealOnScroll() {
+            const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+            
+            for (let i = 0; i < reveals.length; i++) {
+                const windowHeight = window.innerHeight;
+                const revealTop = reveals[i].getBoundingClientRect().top;
+                const revealPoint = 150;
+                
+                if (revealTop < windowHeight - revealPoint) {
+                    reveals[i].classList.add('active');
+                }
+            }
+        }
+
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', revealOnScroll);
+        
+        // Дополнительно активируем видимые элементы при загрузке
+        setTimeout(revealOnScroll, 100);
+
+        // Обработка формы (демо)
+        const contactForm = document.querySelector('.contact-form');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Спасибо! Евгений свяжется с вами в ближайшее время.');
+                this.reset();
+            });
+        }
+    </script>
+</body>
+</html>

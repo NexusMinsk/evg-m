@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Евгений | Работа в команде</title>
+    <!-- Шрифты -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Merriweather:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* СБРОС И БАЗА */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f1115;
+            color: #fff;
+            overflow-x: hidden;
+            line-height: 1.5;
+        }
+
+        /* АНИМАЦИИ ПОЯВЛЕНИЯ */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* ДЛЯ ЭЛЕМЕНТОВ, ПОЯВЛЯЮЩИХСЯ ПРИ СКРОЛЛЕ */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);
+        }
+
+        .reveal-left.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(30px);
+            transition: all 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);
+        }
+
+        .reveal-right.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-scale {
+            opacity: 0;
+            transform: scale(0.95);
+            transition: all 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);
+        }
+
+        .reveal-scale.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* ЛИПКАЯ НАВИГАЦИЯ */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(15, 17, 21, 0.92);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(212, 163, 115, 0.3);
+            padding: 1.2rem 2rem;
+            width: 100%;
+            animation: slideInLeft 0.6s ease-out;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .nav-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .nav-logo span {
+            color: #d4a373;
+            font-family: 'Merriweather', serif;
+            font-style: italic;
+            font-weight: 300;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+            padding: 0.5rem 0;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: #d4a373;
+            border-bottom-color: #d4a373;
+        }
+
+        .nav-cities {
+            display: flex;
+            gap: 1.2rem;
+            background: rgba(212, 163, 115, 0.1);
+            padding: 0.5rem 1.5rem;
+            border-radius: 40px;
+            border: 1px solid rgba(212, 163, 115, 0.3);
+        }
+
+        .nav-cities span {
+            color: #fff;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        /* ПЕРВАЯ СЕКЦИЯ С VANTA */
+        .hero-section {
+            position: relative;
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #vanta-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: 0.9;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            min-height: 60vh;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 2rem 1.5rem;
+            width: 100%;
+        }
+
+        .hero-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 2rem 0 3rem 0;
+            max-width: 900px;
+        }
+
+        .hero-greeting {
+            font-size: 1.2rem;
+            color: #d4a373;
+            margin-bottom: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            animation: slideInLeft 0.8s 0.2s ease-out forwards;
+            opacity: 0;
+        }
+
+        .hero-title {
+            font-size: clamp(2.8rem, 8vw, 5.2rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.8rem;
+            font-family: 'Merriweather', serif;
+            font-weight: 300;
+            color: #fff;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            animation: fadeUp 1s 0.3s ease-out forwards;
+            opacity: 0;
+        }
+
+        .hero-title strong {
+            font-weight: 700;
+            color: #d4a373;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .hero-desc {
+            font-size: 1.2rem;
+            max-width: 600px;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 2.5rem;
+            border-left: 3px solid #d4a373;
+            padding-left: 1.8rem;
+            animation: slideInRight 0.8s 0.4s ease-out forwards;
+            opacity: 0;
+        }
+
+        /* ВТОРАЯ СЕКЦИЯ */
+        .content-section {
+            background-color: #0f1115;
+            position: relative;
+            z-index: 5;
+            padding: 5rem 2rem;
+        }
+
+        .content-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            font-family: 'Merriweather', serif;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .section-title span {
+            color: #d4a373;
+            font-weight: 400;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 4rem;
+            max-width: 700px;
+        }
+
+        /* О КОМАНДЕ */
+        .about-team {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 5rem;
+        }
+
+        .team-text p {
+            color: rgba(255,255,255,0.8);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .team-values {
+            background: linear-gradient(145deg, #1a1d24, #0f1115);
+            border: 1px solid rgba(212, 163, 115, 0.2);
+            border-radius: 30px;
+            padding: 2rem;
+        }
+
+        .team-values h3 {
+            font-size: 1.8rem;
+            color: #d4a373;
+            margin-bottom: 1.5rem;
+        }
+
+        .values-list {
+            list-style: none;
+        }
+
+        .values-list li {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.2rem;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .values-list li i {
+            color: #d4a373;
+            width: 24px;
+        }
+
+        /* ПРЕИМУЩЕСТВА РАБОТЫ */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+
+        .benefit-card {
+            background: rgba(26, 29, 36, 0.5);
+            border: 1px solid rgba(212, 163, 115, 0.2);
+            border-radius: 24px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .benefit-card:hover {
+            border-color: #d4a373;
+            transform: translateY(-4px);
+        }
+
+        .benefit-icon {
+            font-size: 2.5rem;
+            color: #d4a373;
+            margin-bottom: 1rem;
+        }
+
+        .benefit-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+            color: #fff;
+        }
+
+        .benefit-card p {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.95rem;
+        }
+
+        /* ОТКРЫТЫЕ ВАКАНСИИ */
+        .vacancies-section {
+            margin: 5rem 0;
+        }
+
+        .vacancy-card {
+            background: linear-gradient(145deg, #1a1d24, #0f1115);
+            border: 1px solid rgba(212, 163, 115, 0.2);
+            border-radius: 30px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: all 0.3s;
+        }
+
+        .vacancy-card:hover {
+            border-color: #d4a373;
+            transform: translateY(-2px);
+        }
+
+        .vacancy-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .vacancy-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .vacancy-icon {
+            font-size: 2rem;
+            color: #d4a373;
+        }
+
+        .vacancy-title h3 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #d4a373;
+        }
+
+        .vacancy-badge {
+            background: rgba(212, 163, 115, 0.1);
+            color: #d4a373;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            border: 1px solid rgba(212, 163, 115, 0.3);
+        }
+
+        .vacancy-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .vacancy-detail-item {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .vacancy-detail-item i {
+            color: #d4a373;
+            font-size: 1.2rem;
+            width: 24px;
+        }
+
+        .vacancy-detail-item h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+            color: #fff;
+        }
+
+        .vacancy-detail-item p {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.95rem;
+        }
+
+        .vacancy-description {
+            color: rgba(255,255,255,0.7);
+            line-height: 1.7;
+            margin: 1.5rem 0;
+        }
+
+        .vacancy-requirements {
+            background: rgba(15, 17, 21, 0.5);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .vacancy-requirements h4 {
+            color: #d4a373;
+            margin-bottom: 1rem;
+        }
+
+        .requirements-list {
+            list-style: none;
+        }
+
+        .requirements-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 0.5rem;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .requirements-list li i {
+            color: #d4a373;
+            font-size: 0.9rem;
+        }
+
+        .vacancy-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .vacancy-salary {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #d4a373;
+        }
+
+        .vacancy-salary small {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.4);
+        }
+
+        .vacancy-apply {
+            background: transparent;
+            border: 2px solid #d4a373;
+            color: #d4a373;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .vacancy-apply:hover {
+            background: #d4a373;
+            color: #0f1115;
+        }
+
+        /* КАК МЫ РАБОТАЕМ */
+        .work-style {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+
+        .work-style-card {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(26, 29, 36, 0.3);
+            border-radius: 30px;
+        }
+
+        .work-style-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: rgba(212, 163, 115, 0.2);
+            font-family: 'Merriweather', serif;
+            margin-bottom: 1rem;
+        }
+
+        .work-style-card h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: #d4a373;
+        }
+
+        .work-style-card p {
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* ФОРМА ОТКЛИКА */
+        .apply-section {
+            background: linear-gradient(145deg, #1a1d24, #0f1115);
+            border: 1px solid rgba(212, 163, 115, 0.2);
+            border-radius: 40px;
+            padding: 3rem;
+            margin: 5rem 0;
+        }
+
+        .apply-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #d4a373;
+        }
+
+        .apply-subtitle {
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 2.5rem;
+        }
+
+        .apply-form {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: rgba(255,255,255,0.8);
+            font-weight: 500;
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            background: rgba(15, 17, 21, 0.8);
+            border: 1px solid rgba(212, 163, 115, 0.2);
+            border-radius: 16px;
+            padding: 1rem 1.2rem;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: #d4a373;
+            box-shadow: 0 0 0 3px rgba(212, 163, 115, 0.2);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-submit {
+            grid-column: span 2;
+            background: #d4a373;
+            color: #0f1115;
+            border: none;
+            padding: 1.2rem 2rem;
+            border-radius: 60px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+        }
+
+        .form-submit:hover {
+            background: #e6b78b;
+            transform: scale(1.02);
+        }
+
+        /* ФУТЕР */
+        .footer {
+            background: #1a1d24;
+            border-radius: 30px 30px 0 0;
+            padding: 4rem 3rem 2rem;
+            margin-top: 5rem;
+            border-top: 1px solid rgba(212, 163, 115, 0.3);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-col h4 {
+            color: #d4a373;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-about p {
+            color: rgba(255,255,255,0.7);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            transition: color 0.2s;
+            font-size: 1rem;
+        }
+
+        .footer-links a:hover {
+            color: #d4a373;
+        }
+
+        .footer-contact p {
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .footer-contact i {
+            color: #d4a373;
+            width: 20px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(212, 163, 115, 0.1);
+            border-radius: 50%;
+            color: #d4a373;
+            text-decoration: none;
+            transition: all 0.2s;
+            font-size: 1.2rem;
+        }
+
+        .social-links a:hover {
+            background: #d4a373;
+            color: #0f1115;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            color: rgba(255,255,255,0.5);
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-bottom-links a {
+            color: rgba(255,255,255,0.5);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-bottom-links a:hover {
+            color: #d4a373;
+        }
+
+        /* АДАПТАЦИЯ */
+        @media (max-width: 1100px) {
+            .about-team {
+                grid-template-columns: 1fr;
+            }
+            
+            .benefits-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .work-style {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 900px) {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .apply-form {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+            
+            .form-submit {
+                grid-column: span 1;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .navbar {
+                padding: 1rem;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .nav-links {
+                justify-content: center;
+            }
+            
+            .nav-cities {
+                justify-content: center;
+            }
+            
+            .hero-content {
+                padding: 1rem;
+            }
+            
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .work-style {
+                grid-template-columns: 1fr;
+            }
+            
+            .vacancy-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .vacancy-details {
+                grid-template-columns: 1fr;
+            }
+            
+            .vacancy-footer {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ЛИПКАЯ НАВИГАЦИЯ -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">Евгений <span>●</span></a>
+            
+            <div class="nav-links">
+                <a href="services.html" class="nav-link">Услуги</a>
+                <a href="about.html" class="nav-link">Обо мне</a>
+                <a href="reviews.html" class="nav-link">Отзывы</a>
+                <a href="career.html" class="nav-link active">Карьера</a>
+                <a href="contacts.html" class="nav-link">Контакты</a>
+                <div class="nav-cities">
+                    <span>МСК</span>
+                    <span>СПб</span>
+                    <span>Казань</span>
+                    <span>BE</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ПЕРВАЯ СЕКЦИЯ: ВАНТА + ГЕРОЙ -->
+    <section class="hero-section">
+        <div id="vanta-bg"></div>
+        
+        <div class="hero-content">
+            <div class="hero-main">
+                <div class="hero-greeting">Стань частью команды</div>
+                <h1 class="hero-title">
+                    Работа в <strong>команде</strong><br>Евгения
+                </h1>
+                <div class="hero-desc">
+                    Строим качественно, платим честно, ценим профессионалов. Ищем ответственных людей в Москве, СПб, Казани.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ВТОРАЯ СЕКЦИЯ -->
+    <section class="content-section">
+        <div class="content-container">
+            
+            <!-- О команде -->
+            <div class="about-team">
+                <div class="team-text reveal-left">
+                    <h2 class="section-title" style="margin-bottom: 2rem;">Кто мы <span>такие</span></h2>
+                    <p>Я Евгений, и я собираю команду так, как хотел бы, чтобы собирали для меня. У меня нет текучки — люди работают годами, потому что им комфортно. Плачу вовремя, даю нормальные условия, не заставляю работать по 12 часов без перерыва.</p>
+                    <p>Мы строим жильё, коммерческие объекты, делаем отделку премиум-класса. Работаем в четырёх городах, но всегда как одна команда. Если ты профессионал или готов им стать — нам по пути.</p>
+                    <p>Главное для меня — человеческое отношение. Не люблю, когда люди друг друга подставляют. Если ты ответственный, руки растут из правильного места, и ты не ищешь халявы — ты наш человек.</p>
+                </div>
+                
+                <div class="team-values reveal-right">
+                    <h3>Наши ценности</h3>
+                    <ul class="values-list">
+                        <li><i class="fas fa-check-circle"></i> Честность — говорим как есть, без пустых обещаний</li>
+                        <li><i class="fas fa-check-circle"></i> Качество — переделывать себе дороже</li>
+                        <li><i class="fas fa-check-circle"></i> Взаимоуважение — без мата и криков</li>
+                        <li><i class="fas fa-check-circle"></i> Ответственность — взялся — сделай</li>
+                        <li><i class="fas fa-check-circle"></i> Развитие — учим новому, растем вместе</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Преимущества работы -->
+            <h2 class="section-title reveal">Почему с нами <span>хорошо</span></h2>
+            <div class="benefits-grid">
+                
+                <div class="benefit-card reveal-scale">
+                    <div class="benefit-icon"><i class="fas fa-money-bill-wave"></i></div>
+                    <h4>Зарплата без задержек</h4>
+                    <p>Два раза в месяц, всегда вовремя. Никаких "завтра" и "через неделю".</p>
+                </div>
+                
+                <div class="benefit-card reveal-scale" style="transition-delay: 0.1s;">
+                    <div class="benefit-icon"><i class="fas fa-bus"></i></div>
+                    <h4>Развозка или компенсация</h4>
+                    <p>Если объект далеко — организуем трансфер или доплатим за дорогу.</p>
+                </div>
+                
+                <div class="benefit-card reveal-scale" style="transition-delay: 0.2s;">
+                    <div class="benefit-icon"><i class="fas fa-thermometer-half"></i></div>
+                    <h4>Нормальные условия</h4>
+                    <p>Бытовка, чай, микроволновка, туалет. Люди не звери.</p>
+                </div>
+                
+                <div class="benefit-card reveal-scale" style="transition-delay: 0.3s;">
+                    <div class="benefit-icon"><i class="fas fa-tools"></i></div>
+                    <h4>Инструмент</h4>
+                    <p>Свой инструмент не нужен — всё предоставим, от перфоратора до миксера.</p>
+                </div>
+                
+                <div class="benefit-card reveal-scale" style="transition-delay: 0.4s;">
+                    <div class="benefit-icon"><i class="fas fa-chart-line"></i></div>
+                    <h4>Рост</h4>
+                    <p>Помогаем расти от подсобника до бригадира, если есть желание.</p>
+                </div>
+                
+                <div class="benefit-card reveal-scale" style="transition-delay: 0.5s;">
+                    <div class="benefit-icon"><i class="fas fa-calendar-alt"></i></div>
+                    <h4>Стабильность</h4>
+                    <p>Работа есть всегда. У нас нет простоев и долгих ожиданий.</p>
+                </div>
+                
+                <div class="benefit-card reveal-scale" style="transition-delay: 0.6s;">
+                    <div class="benefit-icon"><i class="fas fa-medal"></i></div>
+                    <h4>Премии</h4>
+                    <p>За быструю и качественную работу — бонусы и надбавки.</p>
+                </div>
+                
+                <div class="benefit-card reveal-scale" style="transition-delay: 0.7s;">
+                    <div class="benefit-icon"><i class="fas fa-users"></i></div>
+                    <h4>Коллектив</h4>
+                    <p>Дружный, без склок и подстав. Помогаем друг другу.</p>
+                </div>
+            </div>
+
+            <!-- Открытые вакансии -->
+            <h2 class="section-title reveal">Кто нам <span>нужен</span></h2>
+            <div class="vacancies-section">
+                
+                <!-- Вакансия 1 - Монолитчики -->
+                <div class="vacancy-card reveal-scale">
+                    <div class="vacancy-header">
+                        <div class="vacancy-title">
+                            <div class="vacancy-icon"><i class="fas fa-hard-hat"></i></div>
+                            <h3>Монолитчики</h3>
+                        </div>
+                        <span class="vacancy-badge">Москва / СПб / Казань</span>
+                    </div>
+                    
+                    <div class="vacancy-details">
+                        <div class="vacancy-detail-item">
+                            <i class="fas fa-calendar"></i>
+                            <div>
+                                <h4>График</h4>
+                                <p>5/2, иногда субботы (оплачиваются отдельно)</p>
+                            </div>
+                        </div>
+                        <div class="vacancy-detail-item">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <h4>Занятость</h4>
+                                <p>Полный день, с 8:00 до 17:00</p>
+                            </div>
+                        </div>
+                        <div class="vacancy-detail-item">
+                            <i class="fas fa-ruler-combined"></i>
+                            <div>
+                                <h4>Опыт</h4>
+                                <p>От 2 лет, уверенное чтение чертежей</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="vacancy-description">
+                        Ищем опытных арматурщиков и бетонщиков для работы на монолитных объектах. Работаем с тяжёлыми марками бетона, сложными узлами. Нужно понимать армирование, уметь вязать каркасы, работать с вибратором. Объекты разные — от частных коттеджей до высоток.
+                    </div>
+                    
+                    <div class="vacancy-requirements">
+                        <h4>Требования:</h4>
+                        <ul class="requirements-list">
+                            <li><i class="fas fa-check"></i> Опыт работы от 2 лет</li>
+                            <li><i class="fas fa-check"></i> Умение читать чертежи</li>
+                            <li><i class="fas fa-check"></i> Свои инструменты приветствуются, но не обязательны</li>
+                            <li><i class="fas fa-check"></i> Ответственность, без вредных привычек</li>
+                            <li><i class="fas fa-check"></i> Готовность к командировкам (оплачивается)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="vacancy-footer">
+                        <div class="vacancy-salary">от 120 000 ₽ <small>на руки</small></div>
+                        <button class="vacancy-apply" onclick="alert('Отклик принят! Евгений свяжется с вами в ближайшее время.')">
+                            Откликнуться <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Вакансия 2 - Отделочники -->
+                <div class="vacancy-card reveal-scale" style="transition-delay: 0.1s;">
+                    <div class="vacancy-header">
+                        <div class="vacancy-title">
+                            <div class="vacancy-icon"><i class="fas fa-paint-roller"></i></div>
+                            <h3>Отделочники (плиточники, штукатуры, маляры)</h3>
+                        </div>
+                        <span class="vacancy-badge">Москва / СПб</span>
+                    </div>
+                    
+                    <div class="vacancy-details">
+                        <div class="vacancy-detail-item">
+                            <i class="fas fa-calendar"></i>
+                            <div>
+                                <h4>График</h4>
+                                <p>5/2, возможны сменные графики</p>
+                            </div>
+                        </div>
+                        <div class="vacancy-detail-item">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <h4>Занятость</h4>
+                                <p>Полный день / объектная</p>
+                            </div>
+                        </div>
+                        <div class="vacancy-detail-item">
+                            <i class="fas fa-ruler-combined"></i>
+                            <div>
+                                <h4>Опыт</h4>
+                                <p>От 3 лет, навыки работы с дорогими материалами</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="vacancy-description">
+                        Нужны мастера, которые делают качественно и аккуратно. Работаем с премиальной отделкой: мрамор, микроцемент, декоративные штукатурки, инженерная доска. Важно понимание геометрии, терпение, желание делать красиво. Объекты в центре Москвы и СПб.
+                    </div>
+                    
+                    <div class="vacancy-requirements">
+                        <h4>Требования:</h4>
+                        <ul class="requirements-list">
+                            <li><i class="fas fa-check"></i> Опыт отделки "под ключ"</li>
+                            <li><i class="fas fa-check"></i> Аккуратность, педантичность</li>
+                            <li><i class="fas fa-check"></i> Свой профессиональный инструмент</li>
+                            <li><i class="fas fa-check"></i> Портфолио (фото работ)</li>
+                            <li><i class="fas fa-check"></i> Знание современных материалов</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="vacancy-footer">
+                        <div class="vacancy-salary">от 150 000 ₽ <small>сдельно / оклад</small></div>
+                        <button class="vacancy-apply" onclick="alert('Отклик принят! Евгений свяжется с вами в ближайшее время.')">
+                            Откликнуться <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Вакансия 3 - Подсобные рабочие -->
+                <div class="vacancy-card reveal-scale" style="transition-delay: 0.2s;">
+                    <div class="vacancy-header">
+                        <div class="vacancy-title">
+                            <div class="vacancy-icon"><i class="fas fa-tools"></i></div>
+                            <h3>Подсобные рабочие / разнорабочие</h3>
+                        </div>
+                        <span class="vacancy-badge">Все города</span>
+                    </div>
+                    
+                    <div class="vacancy-details">
+                        <div class="vacancy-detail-item">
+                            <i class="fas fa-calendar"></i>
+                            <div>
+                                <h4>График</h4>
+                                <p>5/2, возможна сменная работа</p>
+                            </div>
+                        </div>
+                        <div class="vacancy-detail-item">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <h4>Занятость</h4>
+                                <p>Полный день / почасовая</p>
+                            </div>
+                        </div>
+                        <div class="vacancy-detail-item">
+                            <i class="fas fa-ruler-combined"></i>
+                            <div>
+                                <h4>Опыт</h4>
+                                <p>Не обязателен, научим</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="vacancy-description">
+                        Ищем физически крепких, ответственных людей для подсобных работ на стройках. Демонтаж, уборка, погрузка, поднос материалов. Ничего сверхсложного, но работать надо. Главное — желание трудиться и отсутствие вредных привычек (никакого алкоголя на объекте).
+                    </div>
+                    
+                    <div class="vacancy-requirements">
+                        <h4>Требования:</h4>
+                        <ul class="requirements-list">
+                            <li><i class="fas fa-check"></i> Физическая выносливость</li>
+                            <li><i class="fas fa-check"></i> Ответственность</li>
+                            <li><i class="fas fa-check"></i> Готовность работать руками</li>
+                            <li><i class="fas fa-check"></i> Без зависимостей</li>
+                            <li><i class="fas fa-check"></i> Желание зарабатывать</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="vacancy-footer">
+                        <div class="vacancy-salary">от 80 000 ₽ <small>ставка + сдельно</small></div>
+                        <button class="vacancy-apply" onclick="alert('Отклик принят! Евгений свяжется с вами в ближайшее время.')">
+                            Откликнуться <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Вакансия 4 - Прорабы -->
+                <div class="vacancy-card reveal-scale" style="transition-delay: 0.3s;">
+                    <div class="vacancy-header">
+                        <div class="vacancy-title">
+                            <div class="vacancy-icon"><i class="fas fa-helmet-safety"></i></div>
+                            <h3>Прорабы / мастера СМР</h3>
+                        </div>
+                        <span class="vacancy-badge">Москва / Казань</span>
+                    </div>
+                    
+                    <div class="vacancy-details">
+                        <div class="vacancy-detail-item">
+                            <i class="fas fa-calendar"></i>
+                            <div>
+                                <h4>График</h4>
+                                <p>5/2, ненормированный</p>
+                            </div>
+                        </div>
+                        <div class="vacancy-detail-item">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <h4>Занятость</h4>
+                                <p>Полный день</p>
+                            </div>
+                        </div>
+                        <div class="vacancy-detail-item">
+                            <i class="fas fa-ruler-combined"></i>
+                            <div>
+                                <h4>Опыт</h4>
+                                <p>От 5 лет, высшее образование приветствуется</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="vacancy-description">
+                            Ищем прорабов, которые разделяют мой подход к работе. Нужно контролировать качество, сроки, вести документацию, общаться с заказчиками. Без "совковых" методов — только уважение к рабочим и честность с заказчиком. Ведёте объект от начала до сдачи.
+                        </div>
+                        
+                        <div class="vacancy-requirements">
+                            <h4>Требования:</h4>
+                            <ul class="requirements-list">
+                                <li><i class="fas fa-check"></i> Опыт управления строительными объектами</li>
+                                <li><i class="fas fa-check"></i> Знание технологий монолита и отделки</li>
+                                <li><i class="fas fa-check"></i> Умение читать проектную документацию</li>
+                                <li><i class="fas fa-check"></i> Навыки переговоров с заказчиками</li>
+                                <li><i class="fas fa-check"></i> Ответственность и честность</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="vacancy-footer">
+                            <div class="vacancy-salary">от 200 000 ₽ <small>оклад + бонусы</small></div>
+                            <button class="vacancy-apply" onclick="alert('Отклик принят! Евгений свяжется с вами в ближайшее время.')">
+                                Откликнуться <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- КАК МЫ РАБОТАЕМ -->
+                <h2 class="section-title reveal">Как у нас <span>строится работа</span></h2>
+                <div class="work-style">
+                    
+                    <div class="work-style-card reveal-scale">
+                        <div class="work-style-number">01</div>
+                        <h4>Планирование</h4>
+                        <p>Каждую неделю собираем бригады, ставим задачи, разбираем сложные моменты. Никакой самодеятельности — чёткий план.</p>
+                    </div>
+                    
+                    <div class="work-style-card reveal-scale" style="transition-delay: 0.1s;">
+                        <div class="work-style-number">02</div>
+                        <h4>Инструмент и материалы</h4>
+                        <p>Всё закупается заранее. Не бывает так, что вы приехали, а работать нечем. Расходники всегда есть.</p>
+                    </div>
+                    
+                    <div class="work-style-card reveal-scale" style="transition-delay: 0.2s;">
+                        <div class="work-style-number">03</div>
+                        <h4>Контроль</h4>
+                        <p>Я лично приезжаю на объекты, проверяю качество. Если что-то не так — разбираем сразу, без откладываний.</p>
+                    </div>
+                    
+                    <div class="work-style-card reveal-scale" style="transition-delay: 0.3s;">
+                        <div class="work-style-number">04</div>
+                        <h4>Оплата</h4>
+                        <p>Два раза в месяц, без задержек. Если сделали больше — получаете премию. Всё прозрачно.</p>
+                    </div>
+                    
+                    <div class="work-style-card reveal-scale" style="transition-delay: 0.4s;">
+                        <div class="work-style-number">05</div>
+                        <h4>Обучение</h4>
+                        <p>Помогаем новичкам освоиться, учим работать правильно. Если видим потенциал — растим до мастера.</p>
+                    </div>
+                    
+                    <div class="work-style-card reveal-scale" style="transition-delay: 0.5s;">
+                        <div class="work-style-number">06</div>
+                        <h4>Команда</h4>
+                        <p>У нас нет "я начальник — ты дурак". Мы одна команда. Если проблема — решаем вместе.</p>
+                    </div>
+                </div>
+
+                <!-- ФОРМА ОТКЛИКА -->
+                <div class="apply-section reveal-scale" id="apply">
+                    <h3 class="apply-title">Откликнуться на вакансию</h3>
+                    <p class="apply-subtitle">Заполните форму, и я свяжусь с вами в течение дня</p>
+                    
+                    <form class="apply-form">
+                        <div class="form-group">
+                            <label class="form-label">Ваше имя</label>
+                            <input type="text" class="form-input" placeholder="Как к вам обращаться?" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Телефон</label>
+                            <input type="tel" class="form-input" placeholder="+7 (999) 123-45-67" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Вакансия</label>
+                            <select class="form-select" required>
+                                <option value="" disabled selected>Выберите вакансию</option>
+                                <option value="monolith">Арматурщик-бетонщик</option>
+                                <option value="finishing">Отделочник</option>
+                                <option value="auxiliary">Подсобный рабочий</option>
+                                <option value="foreman">Прораб</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Город</label>
+                            <select class="form-select" required>
+                                <option value="" disabled selected>Выберите город</option>
+                                <option value="msk">Москва</option>
+                                <option value="spb">Санкт-Петербург</option>
+                                <option value="kzn">Казань</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label class="form-label">О себе (опыт, навыки)</label>
+                            <textarea class="form-textarea" placeholder="Напишите кратко о своём опыте, что умеете, где работали..." required></textarea>
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label class="form-label">
+                                <input type="checkbox" required> Я согласен на обработку персональных данных
+                            </label>
+                        </div>
+                        
+                        <button type="submit" class="form-submit" onclick="alert('Спасибо! Евгений свяжется с вами в ближайшее время.'); return false;">
+                            Отправить отклик <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- ФУТЕР -->
+                <footer class="footer">
+                    <div class="footer-grid">
+                        <div class="footer-col footer-about reveal-left">
+                            <h4>Евгений</h4>
+                            <p>Лично отвечаю за качество на каждом объекте. Строительный подряд без посредников и лишних обещаний.</p>
+                            <div class="social-links">
+                                <a href="#"><i class="fab fa-whatsapp"></i></a>
+                                <a href="#"><i class="fab fa-telegram"></i></a>
+                                <a href="#"><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                        
+                        <div class="footer-col reveal">
+                            <h4>Услуги</h4>
+                            <ul class="footer-links">
+                                <li><a href="#">Монолитные работы</a></li>
+                                <li><a href="#">Отделка помещений</a></li>
+                                <li><a href="#">Подсобные работы</a></li>
+                                <li><a href="#">Демонтаж и вывоз</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="footer-col reveal" style="transition-delay: 0.1s;">
+                            <h4>Информация</h4>
+                            <ul class="footer-links">
+                                <li><a href="#">Портфолио</a></li>
+                                <li><a href="#">Отзывы</a></li>
+                                <li><a href="#">Вакансии</a></li>
+                                <li><a href="#">Реквизиты</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="footer-col footer-contact reveal-right">
+                            <h4>Контакты</h4>
+                            <p><i class="fas fa-phone"></i> +375 (11) 111-11-11</p>
+                            <p><i class="fas fa-envelope"></i> evgeny@build.msk.ru</p>
+                            <p><i class="fas fa-map-marker-alt"></i> Москва, СПб, Казань</p>
+                            <p><i class="fas fa-globe"></i> Бельгия (Bruxelles)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="footer-bottom reveal">
+                        <div>© 2025 Евгений. Все права защищены</div>
+                        <div class="footer-bottom-links">
+                            <a href="#">Политика конфиденциальности</a>
+                            <a href="#">Договор оферты</a>
+                        </div>
+                    </div>
+                </footer>
+
+            </div>
+        </section>
+
+        <!-- Подключаем Vanta -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.net.min.js"></script>
+
+        <script>
+            // Инициализация Vanta
+            VANTA.NET({
+                el: "#vanta-bg",
+                mouseControls: true,
+                touchControls: true,
+                gyroControls: false,
+                minHeight: 200.00,
+                minWidth: 200.00,
+                scale: 1.00,
+                scaleMobile: 1.00,
+                color: 0xd4a373,
+                backgroundColor: 0x0f1115,
+                points: 13.00,
+                maxDistance: 22.00,
+                spacing: 17.00,
+                showDots: false
+            });
+
+            // Анимации при скролле
+            function revealOnScroll() {
+                const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+                
+                for (let i = 0; i < reveals.length; i++) {
+                    const windowHeight = window.innerHeight;
+                    const revealTop = reveals[i].getBoundingClientRect().top;
+                    const revealPoint = 150;
+                    
+                    if (revealTop < windowHeight - revealPoint) {
+                        reveals[i].classList.add('active');
+                    }
+                }
+            }
+
+            window.addEventListener('scroll', revealOnScroll);
+            window.addEventListener('load', revealOnScroll);
+            
+            setTimeout(revealOnScroll, 100);
+        </script>
+    </body>
+</html>
