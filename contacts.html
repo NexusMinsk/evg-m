@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>Евгений | Контакты</title>
     <!-- Шрифты -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -131,13 +131,12 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            background: rgba(15, 17, 21, 0.92);
+            background: rgba(15, 17, 21, 0.95);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(212, 163, 115, 0.3);
             padding: 1.2rem 2rem;
             width: 100%;
-            animation: slideInLeft 0.6s ease-out;
         }
 
         .nav-container {
@@ -146,8 +145,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 1.5rem;
         }
 
         .nav-logo {
@@ -165,11 +162,33 @@
             font-weight: 300;
         }
 
+        /* Бургер-меню */
+        .burger-checkbox {
+            display: none;
+        }
+
+        .burger-label {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            padding: 10px;
+            z-index: 101;
+        }
+
+        .burger-label span {
+            display: block;
+            width: 30px;
+            height: 3px;
+            background-color: #d4a373;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
         .nav-links {
             display: flex;
             gap: 2.5rem;
             align-items: center;
-            flex-wrap: wrap;
         }
 
         .nav-link {
@@ -181,6 +200,7 @@
             padding: 0.5rem 0;
             border-bottom: 2px solid transparent;
             transition: all 0.2s;
+            white-space: nowrap;
         }
 
         .nav-link:hover, .nav-link.active {
@@ -195,6 +215,7 @@
             padding: 0.5rem 1.5rem;
             border-radius: 40px;
             border: 1px solid rgba(212, 163, 115, 0.3);
+            white-space: nowrap;
         }
 
         .nav-cities span {
@@ -447,7 +468,7 @@
             font-weight: 500;
         }
 
-        .form-input, .form-textarea {
+        .form-input, .form-textarea, .form-select {
             background: rgba(15, 17, 21, 0.8);
             border: 1px solid rgba(212, 163, 115, 0.2);
             border-radius: 16px;
@@ -458,10 +479,19 @@
             transition: all 0.2s;
         }
 
-        .form-input:focus, .form-textarea:focus {
+        .form-input:focus, .form-textarea:focus, .form-select:focus {
             outline: none;
             border-color: #d4a373;
             box-shadow: 0 0 0 3px rgba(212, 163, 115, 0.2);
+        }
+
+        .form-select {
+            cursor: pointer;
+        }
+
+        .form-select option {
+            background: #1a1d24;
+            color: #fff;
         }
 
         .form-textarea {
@@ -695,14 +725,98 @@
             color: #d4a373;
         }
 
+        /* ГОРИЗОНТАЛЬНЫЙ СКРОЛЛ ДЛЯ FAQ */
+        @media (max-width: 700px) {
+            .faq-grid {
+                display: flex;
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                gap: 1rem;
+                padding: 0.5rem 0 1.5rem 0;
+                margin: 1rem 0;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: thin;
+                scrollbar-color: #d4a373 #1a1d24;
+            }
+
+            .faq-grid::-webkit-scrollbar {
+                height: 5px;
+            }
+
+            .faq-grid::-webkit-scrollbar-track {
+                background: #1a1d24;
+                border-radius: 10px;
+            }
+
+            .faq-grid::-webkit-scrollbar-thumb {
+                background: #d4a373;
+                border-radius: 10px;
+            }
+
+            .faq-item {
+                min-width: 280px;
+                width: 280px;
+                flex-shrink: 0;
+                margin: 0;
+            }
+        }
+
         /* АДАПТАЦИЯ */
+        @media (max-width: 950px) {
+            .burger-label {
+                display: flex;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(15, 17, 21, 0.98);
+                backdrop-filter: blur(12px);
+                flex-direction: column;
+                gap: 0;
+                padding: 1rem 0;
+                border-bottom: 1px solid rgba(212, 163, 115, 0.3);
+                max-height: 80vh;
+                overflow-y: auto;
+            }
+
+            .burger-checkbox:checked ~ .nav-links {
+                display: flex;
+            }
+
+            .burger-checkbox:checked + .burger-label span:nth-child(1) {
+                transform: rotate(45deg) translate(8px, 8px);
+            }
+
+            .burger-checkbox:checked + .burger-label span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .burger-checkbox:checked + .burger-label span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -7px);
+            }
+
+            .nav-links .nav-link {
+                width: 100%;
+                text-align: center;
+                padding: 1rem;
+                border-bottom: 1px solid rgba(212, 163, 115, 0.1);
+            }
+
+            .nav-cities {
+                margin: 1rem auto;
+                justify-content: center;
+                width: fit-content;
+            }
+        }
+
         @media (max-width: 900px) {
             .contact-grid {
                 grid-template-columns: 1fr;
-            }
-            
-            .faq-grid {
-                grid-template-columns: 1fr;
+                gap: 2rem;
             }
             
             .footer-grid {
@@ -715,25 +829,13 @@
                 padding: 1rem;
             }
             
-            .nav-container {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
-            .nav-links {
-                justify-content: center;
-            }
-            
-            .nav-cities {
-                justify-content: center;
-            }
-            
             .hero-content {
                 padding: 1rem;
             }
             
             .form-row {
                 grid-template-columns: 1fr;
+                gap: 1rem;
             }
             
             .footer-grid {
@@ -748,20 +850,72 @@
             .map-container {
                 height: 350px;
             }
+            
+            .contact-form-card {
+                padding: 1.5rem;
+            }
+            
+            .form-input, .form-select, .form-textarea {
+                padding: 0.8rem 1rem;
+                font-size: 0.95rem;
+            }
+            
+            .form-submit {
+                padding: 1rem 1.5rem;
+                font-size: 1.1rem;
+            }
+            
+            .map-cities {
+                gap: 1rem;
+            }
+            
+            .city-badge {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+            
+            .contact-card {
+                padding: 1.5rem;
+            }
+            
+            .contact-card h3 {
+                font-size: 1.3rem;
+                margin-bottom: 1rem;
+            }
+            
+            .contact-item {
+                font-size: 0.95rem;
+                margin-bottom: 1rem;
+            }
+            
+            .social-link-large {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- ЛИПКАЯ НАВИГАЦИЯ -->
+    <!-- ЛИПКАЯ НАВИГАЦИЯ С БУРГЕРОМ -->
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="nav-logo">Евгений <span>●</span></a>
             
+            <input type="checkbox" id="burger-toggle" class="burger-checkbox">
+            <label for="burger-toggle" class="burger-label">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
+            
             <div class="nav-links">
-                <a href="index.html#services" class="nav-link">Услуги</a>
-                <a href="index.html#facts" class="nav-link">Факты</a>
-                <a href="reviews.html" class="nav-link">Отзывы</a>
+                <a href="uslugi.html" class="nav-link">Услуги</a>
+                <a href="primery-rabot.html" class="nav-link">Наши проекты</a>
+                <a href="otzyv.html" class="nav-link">Отзывы</a>
+                <a href="vacansii.html" class="nav-link">Вакансии</a>
+                <a href="about.html" class="nav-link">Обо мне</a>
                 <a href="#" class="nav-link active">Контакты</a>
                 <div class="nav-cities">
                     <span>МСК</span>
@@ -892,7 +1046,7 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label class="form-label">Телефон</label>
-                                <input type="tel" class="form-input" placeholder="+7 (999) 123-45-67" required>
+                                <input type="tel" class="form-input" placeholder="+375 (29) 123-45-67" required>
                             </div>
                             
                             <div class="form-group">
@@ -1104,6 +1258,13 @@
         
         // Дополнительно активируем видимые элементы при загрузке
         setTimeout(revealOnScroll, 100);
+
+        // Закрытие бургер-меню при клике на ссылку
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('burger-toggle').checked = false;
+            });
+        });
 
         // Обработка формы (демо)
         const contactForm = document.querySelector('.contact-form');
