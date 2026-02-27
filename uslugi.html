@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>Евгений | Услуги</title>
     <!-- Шрифты -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,6 +12,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
+        /* ГЛАВНОЕ - включаем плавный скролл для всей страницы */
+        html {
+            scroll-behavior: smooth;
+        }
+
         /* СБРОС И БАЗА */
         * {
             margin: 0;
@@ -25,9 +30,22 @@
             color: #fff;
             overflow-x: hidden;
             line-height: 1.5;
+            animation: pageFadeIn 0.8s ease-out forwards;
         }
 
-        /* АНИМАЦИИ ПОЯВЛЕНИЯ */
+        /* АНИМАЦИЯ ПОЯВЛЕНИЯ ВСЕЙ СТРАНИЦЫ */
+        @keyframes pageFadeIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.97);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* АНИМАЦИИ ПОЯВЛЕНИЯ ЭЛЕМЕНТОВ */
         @keyframes fadeUp {
             from {
                 opacity: 0;
@@ -131,13 +149,12 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            background: rgba(15, 17, 21, 0.92);
+            background: rgba(15, 17, 21, 0.95);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(212, 163, 115, 0.3);
             padding: 1.2rem 2rem;
             width: 100%;
-            animation: slideInLeft 0.6s ease-out;
         }
 
         .nav-container {
@@ -146,8 +163,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 1.5rem;
         }
 
         .nav-logo {
@@ -165,11 +180,33 @@
             font-weight: 300;
         }
 
+        /* Бургер-меню */
+        .burger-checkbox {
+            display: none;
+        }
+
+        .burger-label {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            padding: 10px;
+            z-index: 101;
+        }
+
+        .burger-label span {
+            display: block;
+            width: 30px;
+            height: 3px;
+            background-color: #d4a373;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
         .nav-links {
             display: flex;
             gap: 2.5rem;
             align-items: center;
-            flex-wrap: wrap;
         }
 
         .nav-link {
@@ -181,6 +218,7 @@
             padding: 0.5rem 0;
             border-bottom: 2px solid transparent;
             transition: all 0.2s;
+            white-space: nowrap;
         }
 
         .nav-link:hover, .nav-link.active {
@@ -195,6 +233,7 @@
             padding: 0.5rem 1.5rem;
             border-radius: 40px;
             border: 1px solid rgba(212, 163, 115, 0.3);
+            white-space: nowrap;
         }
 
         .nav-cities span {
@@ -787,18 +826,123 @@
             color: #d4a373;
         }
 
+        /* ГОРИЗОНТАЛЬНЫЙ СКРОЛЛ ТОЛЬКО ДЛЯ МОБИЛЬНЫХ */
+        @media (max-width: 700px) {
+            .examples-grid,
+            .portfolio-grid {
+                display: none;
+            }
+
+            .mobile-scroll {
+                display: flex !important;
+                overflow-x: auto;
+                gap: 1rem;
+                padding: 0.5rem 0 1.5rem 0;
+                margin: 1rem 0 2rem 0;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: thin;
+                scrollbar-color: #d4a373 #1a1d24;
+            }
+
+            .mobile-scroll::-webkit-scrollbar {
+                height: 5px;
+            }
+
+            .mobile-scroll::-webkit-scrollbar-track {
+                background: #1a1d24;
+                border-radius: 10px;
+            }
+
+            .mobile-scroll::-webkit-scrollbar-thumb {
+                background: #d4a373;
+                border-radius: 10px;
+            }
+
+            .mobile-scroll .example-card,
+            .mobile-scroll .portfolio-item {
+                min-width: 260px;
+                width: 260px;
+                flex-shrink: 0;
+                margin: 0;
+            }
+
+            .mobile-scroll .example-card:hover,
+            .mobile-scroll .portfolio-item:hover {
+                transform: translateY(-4px);
+            }
+        }
+
+        @media (min-width: 701px) {
+            .mobile-scroll {
+                display: none !important;
+            }
+        }
+
         /* АДАПТАЦИЯ */
+        @media (max-width: 1200px) {
+            .stages-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
         @media (max-width: 1100px) {
             .service-content {
                 grid-template-columns: 1fr;
             }
             
-            .stages-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
             .examples-grid, .portfolio-grid {
                 grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 950px) {
+            .burger-label {
+                display: flex;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(15, 17, 21, 0.98);
+                backdrop-filter: blur(12px);
+                flex-direction: column;
+                gap: 0;
+                padding: 1rem 0;
+                border-bottom: 1px solid rgba(212, 163, 115, 0.3);
+                max-height: 80vh;
+                overflow-y: auto;
+            }
+
+            .burger-checkbox:checked ~ .nav-links {
+                display: flex;
+            }
+
+            .burger-checkbox:checked + .burger-label span:nth-child(1) {
+                transform: rotate(45deg) translate(8px, 8px);
+            }
+
+            .burger-checkbox:checked + .burger-label span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .burger-checkbox:checked + .burger-label span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -7px);
+            }
+
+            .nav-links .nav-link {
+                width: 100%;
+                text-align: center;
+                padding: 1rem;
+                border-bottom: 1px solid rgba(212, 163, 115, 0.1);
+            }
+
+            .nav-cities {
+                margin: 1rem auto;
+                justify-content: center;
+                width: fit-content;
             }
         }
 
@@ -817,19 +961,6 @@
         @media (max-width: 700px) {
             .navbar {
                 padding: 1rem;
-            }
-            
-            .nav-container {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
-            .nav-links {
-                justify-content: center;
-            }
-            
-            .nav-cities {
-                justify-content: center;
             }
             
             .hero-content {
@@ -860,20 +991,37 @@
             .cta-large h2 {
                 font-size: 1.8rem;
             }
+            
+            .services-nav {
+                gap: 0.5rem;
+            }
+            
+            .service-nav-btn {
+                padding: 0.7rem 1.5rem;
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
 <body>
-
-    <!-- ЛИПКАЯ НАВИГАЦИЯ -->
+    <!-- ЛИПКАЯ НАВИГАЦИЯ С БУРГЕРОМ -->
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="nav-logo">Евгений <span>●</span></a>
             
+            <input type="checkbox" id="burger-toggle" class="burger-checkbox">
+            <label for="burger-toggle" class="burger-label">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
+            
             <div class="nav-links">
-                <a href="#" class="nav-link active">Услуги</a>
-                <a href="facts.html" class="nav-link">Факты</a>
-                <a href="reviews.html" class="nav-link">Отзывы</a>
+                <a href="uslugi.html" class="nav-link active">Услуги</a>
+                <a href="primery-rabot.html" class="nav-link">Наши проекты</a>
+                <a href="otzyv.html" class="nav-link">Отзывы</a>
+                <a href="vacansii.html" class="nav-link">Вакансии</a>
+                <a href="about.html" class="nav-link">Обо мне</a>
                 <a href="contacts.html" class="nav-link">Контакты</a>
                 <div class="nav-cities">
                     <span>МСК</span>
@@ -909,7 +1057,7 @@
             
             <!-- Навигация по услугам -->
             <div class="services-nav reveal">
-                <button class="service-nav-btn active" data-service="monolith">Монолит</button>
+                <button class="service-nav-btn" data-service="monolith">Монолит</button>
                 <button class="service-nav-btn" data-service="finishing">Отделочные</button>
                 <button class="service-nav-btn" data-service="auxiliary">Подсобный</button>
                 <button class="service-nav-btn" data-service="demolition">Демонтаж</button>
@@ -942,7 +1090,7 @@
                     </div>
                 </div>
 
-                <!-- Примеры работ -->
+                <!-- Примеры работ - десктоп версия (сетка) -->
                 <h3 class="reveal" style="margin: 2rem 0 1.5rem;">Примеры работ</h3>
                 <div class="examples-grid">
                     <div class="example-card reveal-scale">
@@ -958,6 +1106,28 @@
                         <span class="example-tag">350 м², 2023</span>
                     </div>
                     <div class="example-card reveal-scale" style="transition-delay: 0.2s;">
+                        <div class="example-icon">🏭</div>
+                        <h4>Складской комплекс</h4>
+                        <p>Колонны, перекрытия, пандусы</p>
+                        <span class="example-tag">СПб, 2023</span>
+                    </div>
+                </div>
+
+                <!-- Мобильная версия (горизонтальный скролл) -->
+                <div class="mobile-scroll">
+                    <div class="example-card">
+                        <div class="example-icon">🏢</div>
+                        <h4>ЖК "Дом на набережной"</h4>
+                        <p>3 секции монолита, 22 этажа</p>
+                        <span class="example-tag">Москва, 2024</span>
+                    </div>
+                    <div class="example-card">
+                        <div class="example-icon">🏠</div>
+                        <h4>Коттедж в Новой Москве</h4>
+                        <p>Монолитная плита + стены</p>
+                        <span class="example-tag">350 м², 2023</span>
+                    </div>
+                    <div class="example-card">
                         <div class="example-icon">🏭</div>
                         <h4>Складской комплекс</h4>
                         <p>Колонны, перекрытия, пандусы</p>
@@ -993,8 +1163,8 @@
                     </div>
                 </div>
 
-                <!-- Примеры работ -->
-                <h3 class="reveal" style="margin: 2rem 0 1.5rem;">Недавние проекты</h3>
+                <!-- Недавние проекты - десктоп версия -->
+                <h3 class="reveal" style="margin: 2rem 0 1.5rem;">Примеры работ</h3>
                 <div class="examples-grid">
                     <div class="example-card reveal-scale">
                         <div class="example-icon">🛋️</div>
@@ -1009,6 +1179,28 @@
                         <span class="example-tag">150 м², 2023</span>
                     </div>
                     <div class="example-card reveal-scale" style="transition-delay: 0.2s;">
+                        <div class="example-icon">🚿</div>
+                        <h4>Ванная с мрамором</h4>
+                        <p>Эксклюзивная отделка</p>
+                        <span class="example-tag">СПб, 2024</span>
+                    </div>
+                </div>
+
+                <!-- Мобильная версия -->
+                <div class="mobile-scroll">
+                    <div class="example-card">
+                        <div class="example-icon">🛋️</div>
+                        <h4>Квартира на Фрунзенской</h4>
+                        <p>Дизайнерский ремонт, микроцемент</p>
+                        <span class="example-tag">78 м², 2024</span>
+                    </div>
+                    <div class="example-card">
+                        <div class="example-icon">🏛️</div>
+                        <h4>Таунхаус в Казани</h4>
+                        <p>Отделка под ключ, терраса</p>
+                        <span class="example-tag">150 м², 2023</span>
+                    </div>
+                    <div class="example-card">
                         <div class="example-icon">🚿</div>
                         <h4>Ванная с мрамором</h4>
                         <p>Эксклюзивная отделка</p>
@@ -1104,7 +1296,7 @@
                     <div class="price-grid">
                         <div class="price-card reveal-scale">
                             <h4>Демонтаж обоев</h4>
-                            <div class="price-amount">от 100 ₽ <small>/м²</small></div>
+                            <div class="price-amount">от 100 BYN <small>/м²</small></div>
                             <ul class="price-features">
                                 <li><i class="fas fa-check"></i> Снятие старых покрытий</li>
                                 <li><i class="fas fa-check"></i> Зачистка стен</li>
@@ -1114,7 +1306,7 @@
                         </div>
                         <div class="price-card reveal-scale" style="transition-delay: 0.1s;">
                             <h4>Демонтаж стен</h4>
-                            <div class="price-amount">от 1 500 ₽ <small>/м²</small></div>
+                            <div class="price-amount">от 200 BYN <small>/м²</small></div>
                             <ul class="price-features">
                                 <li><i class="fas fa-check"></i> Кирпич, бетон, гипсолит</li>
                                 <li><i class="fas fa-check"></i> Сбор мусора в мешки</li>
@@ -1124,7 +1316,7 @@
                         </div>
                         <div class="price-card reveal-scale" style="transition-delay: 0.2s;">
                             <h4>Вывоз мусора</h4>
-                            <div class="price-amount">от 8 000 ₽ <small>/контейнер</small></div>
+                            <div class="price-amount">от 300 BYN <small>/контейнер</small></div>
                             <ul class="price-features">
                                 <li><i class="fas fa-check"></i> Контейнер 8 м³</li>
                                 <li><i class="fas fa-check"></i> Погрузка включена</li>
@@ -1167,6 +1359,7 @@
             <div class="portfolio-preview">
                 <h2 class="section-title reveal">Последние <span>объекты</span></h2>
                 
+                <!-- Десктоп версия -->
                 <div class="portfolio-grid">
                     <div class="portfolio-item reveal-scale">
                         <h4>ЖК "Триколор"</h4>
@@ -1183,6 +1376,31 @@
                         <div class="portfolio-tag">Новая Москва</div>
                     </div>
                     <div class="portfolio-item reveal-scale" style="transition-delay: 0.2s;">
+                        <h4>Ресторан "На Волге"</h4>
+                        <div class="portfolio-detail">Площадь: <span>450 м²</span></div>
+                        <div class="portfolio-detail">Работы: <span>Демонтаж + отделка</span></div>
+                        <div class="portfolio-detail">Срок: <span>2024</span></div>
+                        <div class="portfolio-tag">Казань</div>
+                    </div>
+                </div>
+
+                <!-- Мобильная версия -->
+                <div class="mobile-scroll">
+                    <div class="portfolio-item">
+                        <h4>ЖК "Триколор"</h4>
+                        <div class="portfolio-detail">Площадь: <span>25 этажей</span></div>
+                        <div class="portfolio-detail">Работы: <span>Монолит каркаса</span></div>
+                        <div class="portfolio-detail">Срок: <span>2024</span></div>
+                        <div class="portfolio-tag">Москва</div>
+                    </div>
+                    <div class="portfolio-item">
+                        <h4>Коттедж "Сосны"</h4>
+                        <div class="portfolio-detail">Площадь: <span>320 м²</span></div>
+                        <div class="portfolio-detail">Работы: <span>Отделка под ключ</span></div>
+                        <div class="portfolio-detail">Срок: <span>2023-2024</span></div>
+                        <div class="portfolio-tag">Новая Москва</div>
+                    </div>
+                    <div class="portfolio-item">
                         <h4>Ресторан "На Волге"</h4>
                         <div class="portfolio-detail">Площадь: <span>450 м²</span></div>
                         <div class="portfolio-detail">Работы: <span>Демонтаж + отделка</span></div>
@@ -1298,7 +1516,14 @@
         
         setTimeout(revealOnScroll, 100);
 
-        // Навигация по услугам
+        // Закрытие бургер-меню при клике на ссылку
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('burger-toggle').checked = false;
+            });
+        });
+
+        // Навигация по услугам (кнопки на странице)
         const navBtns = document.querySelectorAll('.service-nav-btn');
         
         navBtns.forEach(btn => {
@@ -1322,6 +1547,31 @@
                 }
             });
         });
+
+        // АВТОМАТИЧЕСКИЙ СКРОЛЛ ПРИ ЗАГРУЗКЕ С ЯКОРЕМ
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1); // убираем #
+            
+            // Ждем 600мс (время анимации появления)
+            setTimeout(function() {
+                const targetElement = document.getElementById(hash);
+                if (targetElement) {
+                    // Активируем кнопку
+                    navBtns.forEach(btn => {
+                        btn.classList.remove('active');
+                        if (btn.getAttribute('data-service') === hash) {
+                            btn.classList.add('active');
+                        }
+                    });
+                    
+                    // ПЛАВНО скроллим
+                    targetElement.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'start' 
+                    });
+                }
+            }, 600);
+        }
     </script>
 </body>
 </html>
