@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>Наши работы | Евгений · Монолит · Отделка</title>
     <!-- Шрифты: Inter + Merriweather -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,12 +27,111 @@
             line-height: 1.5;
         }
 
+        /* АНИМАЦИИ ПОЯВЛЕНИЯ */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* ДЛЯ ЭЛЕМЕНТОВ, ПОЯВЛЯЮЩИХСЯ ПРИ СКРОЛЛЕ */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);
+        }
+
+        .reveal-left.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(30px);
+            transition: all 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);
+        }
+
+        .reveal-right.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-scale {
+            opacity: 0;
+            transform: scale(0.95);
+            transition: all 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);
+        }
+
+        .reveal-scale.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
         /* ЛИПКАЯ НАВИГАЦИЯ */
         .navbar {
             position: sticky;
             top: 0;
             z-index: 100;
-            background: rgba(15, 17, 21, 0.92);
+            background: rgba(15, 17, 21, 0.95);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(212, 163, 115, 0.3);
@@ -46,8 +145,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 1.5rem;
         }
 
         .nav-logo {
@@ -65,11 +162,33 @@
             font-weight: 300;
         }
 
+        /* Бургер-меню */
+        .burger-checkbox {
+            display: none;
+        }
+
+        .burger-label {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            padding: 10px;
+            z-index: 101;
+        }
+
+        .burger-label span {
+            display: block;
+            width: 30px;
+            height: 3px;
+            background-color: #d4a373;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
         .nav-links {
             display: flex;
             gap: 2.5rem;
             align-items: center;
-            flex-wrap: wrap;
         }
 
         .nav-link {
@@ -81,6 +200,7 @@
             padding: 0.5rem 0;
             border-bottom: 2px solid transparent;
             transition: all 0.2s;
+            white-space: nowrap;
         }
 
         .nav-link:hover, .nav-link.active {
@@ -88,13 +208,14 @@
             border-bottom-color: #d4a373;
         }
 
-.nav-cities {
+        .nav-cities {
             display: flex;
             gap: 1.2rem;
             background: rgba(212, 163, 115, 0.1);
             padding: 0.5rem 1.5rem;
             border-radius: 40px;
             border: 1px solid rgba(212, 163, 115, 0.3);
+            white-space: nowrap;
         }
 
         .nav-cities span {
@@ -102,6 +223,7 @@
             font-weight: 500;
             font-size: 0.95rem;
         }
+
         /* ПЕРВАЯ СЕКЦИЯ С VANTA */
         .hero-section {
             position: relative;
@@ -118,6 +240,7 @@
             height: 100%;
             z-index: 1;
             opacity: 0.9;
+            animation: fadeIn 1.5s ease-out;
         }
 
         .hero-content {
@@ -149,6 +272,8 @@
             font-weight: 500;
             letter-spacing: 1px;
             text-transform: uppercase;
+            animation: slideInLeft 0.8s 0.2s ease-out forwards;
+            opacity: 0;
         }
 
         .hero-title {
@@ -160,6 +285,8 @@
             font-weight: 300;
             color: #fff;
             text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            animation: fadeUp 1s 0.3s ease-out forwards;
+            opacity: 0;
         }
 
         .hero-title strong {
@@ -175,6 +302,8 @@
             margin-bottom: 2.5rem;
             border-left: 3px solid #d4a373;
             padding-left: 1.8rem;
+            animation: slideInRight 0.8s 0.4s ease-out forwards;
+            opacity: 0;
         }
 
         /* ВТОРАЯ СЕКЦИЯ */
@@ -228,6 +357,7 @@
             font-weight: 500;
             cursor: pointer;
             transition: all 0.2s;
+            white-space: nowrap;
         }
 
         .filter-btn:hover, .filter-btn.active {
@@ -242,6 +372,11 @@
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 2rem;
             margin-bottom: 4rem;
+            transition: opacity 0.3s;
+        }
+
+        .projects-grid.filtering {
+            opacity: 0.6;
         }
 
         .project-card {
@@ -547,6 +682,57 @@
         }
 
         /* АДАПТАЦИЯ */
+        @media (max-width: 950px) {
+            .burger-label {
+                display: flex;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(15, 17, 21, 0.98);
+                backdrop-filter: blur(12px);
+                flex-direction: column;
+                gap: 0;
+                padding: 1rem 0;
+                border-bottom: 1px solid rgba(212, 163, 115, 0.3);
+                max-height: 80vh;
+                overflow-y: auto;
+            }
+
+            .burger-checkbox:checked ~ .nav-links {
+                display: flex;
+            }
+
+            .burger-checkbox:checked + .burger-label span:nth-child(1) {
+                transform: rotate(45deg) translate(8px, 8px);
+            }
+
+            .burger-checkbox:checked + .burger-label span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .burger-checkbox:checked + .burger-label span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -7px);
+            }
+
+            .nav-links .nav-link {
+                width: 100%;
+                text-align: center;
+                padding: 1rem;
+                border-bottom: 1px solid rgba(212, 163, 115, 0.1);
+            }
+
+            .nav-cities {
+                margin: 1rem auto;
+                justify-content: center;
+                width: fit-content;
+            }
+        }
+
         @media (max-width: 900px) {
             .footer-grid {
                 grid-template-columns: 1fr 1fr;
@@ -561,19 +747,6 @@
         @media (max-width: 700px) {
             .navbar {
                 padding: 1rem;
-            }
-            
-            .nav-container {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
-            .nav-links {
-                justify-content: center;
-            }
-            
-            .nav-cities {
-                justify-content: center;
             }
             
             .hero-content {
@@ -605,34 +778,48 @@
             
             .filters {
                 justify-content: center;
+                gap: 0.5rem;
+            }
+            
+            .filter-btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
             }
         }
 
         .project-image {
-    width: 100%;
-    height: 200px;
-    background-size: cover;
-    background-position: center;
-    border-radius: 16px;
-    margin-bottom: 1.5rem;
-    border: 1px solid rgba(212, 163, 115, 0.2);
-    transition: all 0.3s;
-}
-
+            width: 100%;
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(212, 163, 115, 0.2);
+            transition: all 0.3s;
+        }
     </style>
 </head>
 <body>
 
-    <!-- ЛИПКАЯ НАВИГАЦИЯ -->
+    <!-- ЛИПКАЯ НАВИГАЦИЯ С БУРГЕРОМ -->
     <nav class="navbar">
         <div class="nav-container">
-            <a href="#" class="nav-logo">Евгений <span>●</span></a>
+            <a href="index.html" class="nav-logo">Евгений <span>●</span></a>
+            
+            <input type="checkbox" id="burger-toggle" class="burger-checkbox">
+            <label for="burger-toggle" class="burger-label">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
             
             <div class="nav-links">
-                <a href="#" class="nav-link">Главная</a>
-                <a href="#" class="nav-link active">Наши работы</a>
-                <a href="#" class="nav-link">Вакансии</a>
-                <a href="#" class="nav-link">Контакты</a>
+                <a href="uslugi.html" class="nav-link">Услуги</a>
+                <a href="#" class="nav-link active">Наши проекты</a>
+                <a href="otzyv.html" class="nav-link">Отзывы</a>
+                <a href="vacansii.html" class="nav-link">Вакансии</a>
+                <a href="about.html" class="nav-link">Обо мне</a>
+                <a href="contacts.html" class="nav-link">Контакты</a>
                 <div class="nav-cities">
                     <span>МСК</span>
                     <span>СПб</span>
@@ -664,23 +851,23 @@
     <section class="content-section">
         <div class="content-container">
             
-            <h2 class="section-title">Реализованные <span>объекты</span></h2>
-            <p class="section-subtitle">С 2010 года мы сдали больше 80 объектов. Вот некоторые из них:</p>
+            <h2 class="section-title reveal">Реализованные <span>объекты</span></h2>
+            <p class="section-subtitle reveal">С 2010 года мы сдали больше 80 объектов. Вот некоторые из них:</p>
             
             <!-- ФИЛЬТРЫ -->
-            <div class="filters">
-                <button class="filter-btn active">Все</button>
-                <button class="filter-btn">Монолит</button>
-                <button class="filter-btn">Отделка</button>
-                <button class="filter-btn">Частные дома</button>
-                <button class="filter-btn">Коммерция</button>
+            <div class="filters reveal">
+                <button class="filter-btn active" data-filter="all">Все</button>
+                <button class="filter-btn" data-filter="монолит">Монолит</button>
+                <button class="filter-btn" data-filter="отделка">Отделка</button>
+                <button class="filter-btn" data-filter="частные дома">Частные дома</button>
+                <button class="filter-btn" data-filter="коммерция">Коммерция</button>
             </div>
             
             <!-- СЕТКА ПРОЕКТОВ -->
-            <div class="projects-grid">
+            <div class="projects-grid" id="projects-grid">
                 
                 <!-- Проект 1 - Коттедж в Минске -->
-                <div class="project-card">
+                <div class="project-card reveal-scale" data-category="монолит частные дома">
                     <div class="project-image" style="background-image: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.6) 100%), url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
                         <span class="project-category">Монолит + отделка</span>
                     </div>
@@ -707,7 +894,7 @@
                 </div>
                 
                 <!-- Проект 2 - Офис в Бресте -->
-                <div class="project-card">
+                <div class="project-card reveal-scale" data-category="отделка коммерция">
                     <div class="project-image" style="background-image: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.6) 100%), url('https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80');">
                         <span class="project-category">Отделка</span>
                     </div>
@@ -734,7 +921,7 @@
                 </div>
                 
                 <!-- Проект 3 - Таунхаус в Гомеле -->
-                <div class="project-card">
+                <div class="project-card reveal-scale" data-category="монолит частные дома">
                     <div class="project-image" style="background-image: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.6) 100%), url('https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
                         <span class="project-category">Монолит</span>
                     </div>
@@ -761,7 +948,7 @@
                 </div>
                 
                 <!-- Проект 4 - Квартира в Минске -->
-                <div class="project-card">
+                <div class="project-card reveal-scale" data-category="отделка">
                     <div class="project-image" style="background-image: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.6) 100%), url('https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80');">
                         <span class="project-category">Отделка</span>
                     </div>
@@ -788,7 +975,7 @@
                 </div>
                 
                 <!-- Проект 5 - Магазин в Витебске -->
-                <div class="project-card">
+                <div class="project-card reveal-scale" data-category="отделка коммерция">
                     <div class="project-image" style="background-image: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.6) 100%), url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
                         <span class="project-category">Коммерция</span>
                     </div>
@@ -815,8 +1002,8 @@
                 </div>
                 
                 <!-- Проект 6 - Фундамент под СТО -->
-                <div class="project-card">
-                   <div class="project-image" style="background-image: url('https://oscar-service.by/wp-content/uploads/2022/08/Slider1.jpg');">
+                <div class="project-card reveal-scale" data-category="монолит коммерция">
+                   <div class="project-image" style="background-image: url('https://images.unsplash.com/photo-1581094794329-8114a89d3f3b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
                         <span class="project-category">Монолит</span>
                     </div>
                     <div class="project-content">
@@ -846,46 +1033,35 @@
             <div class="facts-section">
                 <div class="facts-bg"></div>
                 <div class="stats-grid">
-                    <div class="stat-block">
+                    <div class="stat-block reveal">
                         <div class="stat-number">87</div>
                         <div class="stat-label">объектов</div>
                         <div class="stat-desc">сдано за 15 лет</div>
                     </div>
-                    <div class="stat-block">
+                    <div class="stat-block reveal">
                         <div class="stat-number">15+</div>
                         <div class="stat-label">лет опыта</div>
                         <div class="stat-desc">у старшего бригады</div>
                     </div>
-                    <div class="stat-block">
+                    <div class="stat-block reveal">
                         <div class="stat-number">5</div>
                         <div class="stat-label">городов</div>
                         <div class="stat-desc">по Беларуси</div>
                     </div>
-<div class="stat-block">
-    <div class="stat-number">100%</div>
-    <div class="stat-label">объектов</div>
-    <div class="stat-desc">сдаём под ключ</div>
-</div>
+                    <div class="stat-block reveal">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">объектов</div>
+                        <div class="stat-desc">сдаём под ключ</div>
+                    </div>
                 </div>
             </div>
-
-            <!-- ПРИЗЫВ К ДЕЙСТВИЮ 
-            <div class="cta-section">
-                <div class="cta-text">
-                    <h3>Хотите так же?</h3>
-                    <p>Обсудим ваш объект и покажем похожие работы</p>
-                </div>
-                <button class="cta-button" onclick="alert('Евгений: +375 (29) 123-45-67\nПишите в WhatsApp/Telegram, договоримся о встрече')">
-                    Связаться <i class="fas fa-arrow-right"></i>
-                </button>
-            </div> -->
 
             <!-- ФУТЕР -->
             <footer class="footer">
                 <div class="footer-grid">
-                    <div class="footer-col footer-about">
+                    <div class="footer-col footer-about reveal-left">
                         <h4>Евгений</h4>
-                        <p>Строительная бригада с 15-летним опытом. Монолит, отделка, подсобные работы — без посредников и лишних обещаний.</p>
+                        <p>Лично отвечаю за качество на каждом объекте. Строительный подряд без посредников и лишних обещаний.</p>
                         <div class="social-links">
                             <a href="#"><i class="fab fa-whatsapp"></i></a>
                             <a href="#"><i class="fab fa-telegram"></i></a>
@@ -893,7 +1069,7 @@
                         </div>
                     </div>
                     
-                    <div class="footer-col">
+                    <div class="footer-col reveal">
                         <h4>Услуги</h4>
                         <ul class="footer-links">
                             <li><a href="#">Монолитные работы</a></li>
@@ -903,7 +1079,7 @@
                         </ul>
                     </div>
                     
-                    <div class="footer-col">
+                    <div class="footer-col reveal">
                         <h4>Информация</h4>
                         <ul class="footer-links">
                             <li><a href="#">Портфолио</a></li>
@@ -913,7 +1089,7 @@
                         </ul>
                     </div>
                     
-                    <div class="footer-col footer-contact">
+                    <div class="footer-col footer-contact reveal-right">
                         <h4>Контакты</h4>
                         <p><i class="fas fa-phone"></i> +375 (11) 111-11-11</p>
                         <p><i class="fas fa-envelope"></i> evgeny@build.msk.ru</p>
@@ -922,7 +1098,7 @@
                     </div>
                 </div>
                 
-                <div class="footer-bottom">
+                <div class="footer-bottom reveal">
                     <div>© 2025 Евгений. Все права защищены</div>
                     <div class="footer-bottom-links">
                         <a href="#">Политика конфиденциальности</a>
@@ -957,12 +1133,69 @@
             showDots: false
         });
 
-        // Фильтры (визуально, для демо)
+        // Анимации при скролле
+        function revealOnScroll() {
+            const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+            
+            for (let i = 0; i < reveals.length; i++) {
+                const windowHeight = window.innerHeight;
+                const revealTop = reveals[i].getBoundingClientRect().top;
+                const revealPoint = 150;
+                
+                if (revealTop < windowHeight - revealPoint) {
+                    reveals[i].classList.add('active');
+                }
+            }
+        }
+
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', revealOnScroll);
+        
+        setTimeout(revealOnScroll, 100);
+
+        // Закрытие бургер-меню при клике на ссылку
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('burger-toggle').checked = false;
+            });
+        });
+
+        // СОРТИРОВКА ПО КАТЕГОРИЯМ
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.addEventListener('click', function() {
+                // Убираем активный класс у всех кнопок
                 document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                // Добавляем активный класс текущей кнопке
                 this.classList.add('active');
-                // Здесь можно добавить реальную фильтрацию
+                
+                const filterValue = this.getAttribute('data-filter');
+                const grid = document.getElementById('projects-grid');
+                const cards = document.querySelectorAll('.project-card');
+                
+                // Добавляем класс анимации
+                grid.classList.add('filtering');
+                
+                // Небольшая задержка для плавности
+                setTimeout(() => {
+                    cards.forEach(card => {
+                        if (filterValue === 'all') {
+                            card.style.display = 'flex';
+                        } else {
+                            const categories = card.getAttribute('data-category').toLowerCase();
+                            if (categories.includes(filterValue)) {
+                                card.style.display = 'flex';
+                            } else {
+                                card.style.display = 'none';
+                            }
+                        }
+                    });
+                    
+                    // Убираем класс анимации
+                    grid.classList.remove('filtering');
+                    
+                    // Перезапускаем анимации для видимых элементов
+                    setTimeout(revealOnScroll, 50);
+                }, 300);
             });
         });
     </script>
