@@ -2,8 +2,8 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Евгений | Монолит · Отделка · Подсобный</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Евгений | Монолит · Отделка · Подсобный · Демонтаж</title>
     <!-- Шрифты -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -78,12 +78,6 @@
             to {
                 opacity: 1;
                 transform: translateX(0);
-            }
-        }
-
-        @keyframes countNumber {
-            from {
-                content: "0";
             }
         }
 
@@ -173,13 +167,12 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            background: rgba(15, 17, 21, 0.92);
+            background: rgba(15, 17, 21, 0.95);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(212, 163, 115, 0.3);
             padding: 1.2rem 2rem;
             width: 100%;
-            animation: slideInLeft 0.6s ease-out;
         }
 
         .nav-container {
@@ -188,8 +181,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 1.5rem;
         }
 
         .nav-logo {
@@ -207,11 +198,33 @@
             font-weight: 300;
         }
 
+        /* Бургер-меню */
+        .burger-checkbox {
+            display: none;
+        }
+
+        .burger-label {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            padding: 10px;
+            z-index: 101;
+        }
+
+        .burger-label span {
+            display: block;
+            width: 30px;
+            height: 3px;
+            background-color: #d4a373;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
         .nav-links {
             display: flex;
             gap: 2.5rem;
             align-items: center;
-            flex-wrap: wrap;
         }
 
         .nav-link {
@@ -223,6 +236,7 @@
             padding: 0.5rem 0;
             border-bottom: 2px solid transparent;
             transition: all 0.2s;
+            white-space: nowrap;
         }
 
         .nav-link:hover {
@@ -237,6 +251,7 @@
             padding: 0.5rem 1.5rem;
             border-radius: 40px;
             border: 1px solid rgba(212, 163, 115, 0.3);
+            white-space: nowrap;
         }
 
         .nav-cities span {
@@ -352,18 +367,18 @@
             font-weight: 400;
         }
 
-        /* УСЛУГИ */
+        /* УСЛУГИ - 4 карточки в ряд */
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
             margin-bottom: 5rem;
         }
 
         .service-card {
             background: linear-gradient(145deg, #1a1d24, #0f1115);
             border: 1px solid rgba(212, 163, 115, 0.2);
-            padding: 2.5rem 2rem;
+            padding: 1.8rem 1.5rem;
             border-radius: 24px;
             transition: all 0.3s;
             display: flex;
@@ -377,50 +392,51 @@
         }
 
         .service-emoji {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
         }
 
         .service-card h3 {
-            font-size: 2rem;
+            font-size: 1.6rem;
             font-weight: 700;
-            margin-bottom: 1.2rem;
+            margin-bottom: 1rem;
             letter-spacing: -0.02em;
             color: #d4a373;
         }
 
         .service-desc {
             color: rgba(255,255,255,0.8);
-            font-size: 1rem;
-            line-height: 1.6;
-            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 1.2rem;
             flex: 1;
         }
 
         .service-desc p {
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.6rem;
         }
 
         .service-btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 0.8rem;
+            gap: 0.6rem;
             background: transparent;
             border: 2px solid #d4a373;
             color: #d4a373;
-            padding: 1rem 1.8rem;
+            padding: 0.7rem 1.2rem;
             border-radius: 50px;
             font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             text-decoration: none;
             transition: all 0.2s;
-            margin-top: 1rem;
+            margin-top: 0.5rem;
             align-self: flex-start;
         }
 
         .service-btn i {
             transition: transform 0.2s;
+            font-size: 0.9rem;
         }
 
         .service-btn:hover {
@@ -647,6 +663,63 @@
         }
 
         /* АДАПТАЦИЯ */
+        @media (max-width: 1200px) {
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 950px) {
+            .burger-label {
+                display: flex;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(15, 17, 21, 0.98);
+                backdrop-filter: blur(12px);
+                flex-direction: column;
+                gap: 0;
+                padding: 1rem 0;
+                border-bottom: 1px solid rgba(212, 163, 115, 0.3);
+                max-height: 80vh;
+                overflow-y: auto;
+            }
+
+            .burger-checkbox:checked ~ .nav-links {
+                display: flex;
+            }
+
+            .burger-checkbox:checked + .burger-label span:nth-child(1) {
+                transform: rotate(45deg) translate(8px, 8px);
+            }
+
+            .burger-checkbox:checked + .burger-label span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .burger-checkbox:checked + .burger-label span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -7px);
+            }
+
+            .nav-links .nav-link {
+                width: 100%;
+                text-align: center;
+                padding: 1rem;
+                border-bottom: 1px solid rgba(212, 163, 115, 0.1);
+            }
+
+            .nav-cities {
+                margin: 1rem auto;
+                justify-content: center;
+                width: fit-content;
+            }
+        }
+
         @media (max-width: 900px) {
             .footer-grid {
                 grid-template-columns: 1fr 1fr;
@@ -661,19 +734,6 @@
         @media (max-width: 700px) {
             .navbar {
                 padding: 1rem;
-            }
-            
-            .nav-container {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
-            .nav-links {
-                justify-content: center;
-            }
-            
-            .nav-cities {
-                justify-content: center;
             }
             
             .hero-content {
@@ -706,16 +766,24 @@
     </style>
 </head>
 <body>
-
-    <!-- ЛИПКАЯ НАВИГАЦИЯ -->
+    <!-- ЛИПКАЯ НАВИГАЦИЯ С БУРГЕРОМ -->
     <nav class="navbar">
         <div class="nav-container">
             <a href="#" class="nav-logo">Евгений <span>●</span></a>
             
+            <input type="checkbox" id="burger-toggle" class="burger-checkbox">
+            <label for="burger-toggle" class="burger-label">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
+            
             <div class="nav-links">
-                <a href="#services" class="nav-link">Услуги</a>
+                <a href="uslugi.html" class="nav-link">Услуги</a>
+                <a href="primery-rabot.html" class="nav-link">Наши проекты</a>
                 <a href="otzyv.html" class="nav-link">Отзывы</a>
-                <a href="#projects" class="nav-link">Проекты</a>
+                <a href="vacansii.html" class="nav-link">Вакансии</a>
+                <a href="about.html" class="nav-link">Обо мне</a>
                 <a href="contacts.html" class="nav-link">Контакты</a>
                 <div class="nav-cities">
                     <span>МСК</span>
@@ -751,45 +819,58 @@
             
             <h2 class="section-title reveal">Мои <span>направления</span></h2>
             
-            <!-- УСЛУГИ С КНОПКАМИ -->
+            <!-- УСЛУГИ С КНОПКАМИ - 4 карточки -->
             <div class="services-grid">
                 
                 <!-- Монолит -->
                 <div class="service-card reveal-scale">
-                    <div class="service-emoji">1</div>
+                    <div class="service-emoji"></div>
                     <h3>Монолит</h3>
                     <div class="service-desc">
-                        <p>Лью бетон с 2008 года. Фундаменты, стены, перекрытия, лестницы — любые формы. Работаю с тяжёлыми марками, делаю армирование по расчёту.</p>
-                        <p>Не люблю когда "на глаз" — только проект или мой опыт, если проекта нет.</p>
+                        <p>Фундаменты, стены, перекрытия, лестницы — любые формы.</p>
+                        <p>Только проект или мой опыт, если проекта нет.</p>
                     </div>
-                    <a href="#" class="service-btn">
+                    <a href="uslugi.html#monolith" class="service-btn">
                         Подробнее о монолите <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
                 
                 <!-- Отделочные -->
                 <div class="service-card reveal-scale" style="transition-delay: 0.1s;">
-                    <div class="service-emoji">2</div>
+                    <div class="service-emoji"></div>
                     <h3>Отделочные</h3>
                     <div class="service-desc">
-                        <p>От стяжки и штукатурки до "белого ключа". Работаю с камнем, деревом, микроцементом, декоративными штукатурками.</p>
-                        <p>Бригады притираются на первом объекте — дальше работают как часы. Лично принимаю каждый этап.</p>
+                        <p>От стяжки и штукатурки до "белого ключа".</p>
+                        <p>Лично принимаю каждый этап.</p>
                     </div>
-                    <a href="#" class="service-btn">
+                    <a href="uslugi.html#finishing" class="service-btn">
                         Подробнее про отделки <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
                 
                 <!-- Подсобный -->
                 <div class="service-card reveal-scale" style="transition-delay: 0.2s;">
-                    <div class="service-emoji">3</div>
+                    <div class="service-emoji"></div>
                     <h3>Подсобный</h3>
                     <div class="service-desc">
-                        <p>Нужны руки на объект? Демонтаж, вынос мусора, уборка, погрузка, поднос материалов. Работаю только с проверенными ребятами.</p>
-                        <p>Никаких "пропащих" — люди трезвые, адекватные, с опытом на стройках.</p>
+                        <p>Демонтаж, вынос мусора, уборка, погрузка.</p>
+                        <p>Трезвые, адекватные, с опытом.</p>
                     </div>
-                    <a href="#" class="service-btn">
+                    <a href="uslugi.html#auxiliary" class="service-btn">
                         Подробнее про подсобных <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <!-- Демонтаж -->
+                <div class="service-card reveal-scale" style="transition-delay: 0.3s;">
+                    <div class="service-emoji"></div>
+                    <h3>Демонтаж</h3>
+                    <div class="service-desc">
+                        <p>Снос стен, демонтаж полов, вывоз мусора.</p>
+                        <p>Работаем аккуратно и быстро.</p>
+                    </div>
+                    <a href="uslugi.html#demolition" class="service-btn">
+                        Подробнее про демонтаж <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
             </div>
@@ -827,7 +908,7 @@
                     <h3>Готовы начинать?</h3>
                     <p>Обсудим сроки и смету за 10 минут</p>
                 </div>
-                <button class="cta-button" onclick="alert('Евгений: +7 (999) 123-45-67\nПишите в WhatsApp/Telegram')">
+                <button class="cta-button" onclick="alert('Евгений: +375 (11) 111-11-11\nПишите в WhatsApp/Telegram')">
                     Связаться <i class="fas fa-arrow-right"></i>
                 </button>
             </div>
@@ -848,10 +929,10 @@
                     <div class="footer-col reveal">
                         <h4>Услуги</h4>
                         <ul class="footer-links">
-                            <li><a href="#">Монолитные работы</a></li>
-                            <li><a href="#">Отделка помещений</a></li>
-                            <li><a href="#">Подсобные работы</a></li>
-                            <li><a href="#">Демонтаж и вывоз</a></li>
+                            <li><a href="uslugi.html#monolith">Монолитные работы</a></li>
+                            <li><a href="uslugi.html#finishing">Отделка помещений</a></li>
+                            <li><a href="uslugi.html#auxiliary">Подсобные работы</a></li>
+                            <li><a href="uslugi.html#demolition">Демонтаж и вывоз</a></li>
                         </ul>
                     </div>
                     
@@ -927,9 +1008,14 @@
         window.addEventListener('scroll', revealOnScroll);
         window.addEventListener('load', revealOnScroll);
         
-        // Дополнительно активируем видимые элементы при загрузке
         setTimeout(revealOnScroll, 100);
+
+        // Закрытие бургер-меню при клике на ссылку
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('burger-toggle').checked = false;
+            });
+        });
     </script>
 </body>
-
 </html>
